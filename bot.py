@@ -31,6 +31,11 @@ class Bot:
 
 
 
+# HELPER FUNCTIONS
+
+def fix_unicode(text):
+    return text.replace(u"\u2019", "'")
+
 
 
 
@@ -53,6 +58,12 @@ def test_bot_init():
     return type(x.start_words) == list and type(x.trigrams) == defaultdict
 
 
+def test_fix_unicode():
+    apos = u"'"
+    apos2 = u"\u2019"
+    return fix_unicode(apos) == "'" and fix_unicode(apos2) == "'"
+
+
 
 def test_func(func):
     print 'Testing: ', func.__name__, 'PASSED: ', func()
@@ -67,12 +78,13 @@ def test():
     print ''
     func_list = [
         test_bot_init,
+        test_fix_unicode,
         ]
     passed = sum([test_func(function) for function in func_list])
     total = len(func_list)
     print ''
     print 'PASSED: ', passed
     print 'FAILED: ', total - passed
-
+    print '***************************************************'
         
     
