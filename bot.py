@@ -24,7 +24,9 @@ class Bot:
         
         content = soup.find('div', 'article-body')
         regex = r"[\w']+|[\.]"
-
+        
+        # this overwrites whatever is already in wkg_docs
+        # so you better do something about it earlier
         self.wkg_document = []
 
         for paragraph in soup('p'):
