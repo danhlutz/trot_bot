@@ -87,7 +87,7 @@ def test_fix_unicode():
 
 def test_scrape():
     trotsky = Bot()
-    url = "https://www.marxists.org/archive/trotsky/1938/tp/tpdiscuss.htm"
+    url = "https://www.marxists.org/archive/trotsky/1940/07/letter04.htm"
     trotsky.scrape_page(url)
     return len(trotsky.wkg_document) == 5541
 
