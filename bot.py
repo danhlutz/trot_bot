@@ -1,5 +1,15 @@
 #trot_bot
 
+from collections import defaultdict
+
+
+
+class Bot:
+
+    def __init__(self):
+        self.start_words = []
+        self.trigrams = defaultdict(list)
+
 # scrape a page
 
 # get a request from the Trotsky Internet Archive
@@ -37,3 +47,4 @@
 # tweet
 
 
+    
