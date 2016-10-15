@@ -89,12 +89,12 @@ def test_scrape():
     trotsky = Bot()
     url = "https://www.marxists.org/archive/trotsky/1940/07/letter04.htm"
     trotsky.scrape_page(url)
-    return len(trotsky.wkg_document) == 667
+    return len(trotsky.wkg_document) > 0 
 
 
 
 def test_func(func):
-    print 'Testing: ', func.__name__, 'PASSED: ', func()
+    print 'Testing: ', func.__name__, '\t','PASSED: ', func()
     if func():
         return 1
     else:
