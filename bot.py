@@ -47,4 +47,32 @@ class Bot:
 # tweet
 
 
+## TESTS
+def test_bot_init():
+    x = Bot()
+    return type(x.start_words) == list and type(x.trigrams) == defaultdict
+
+
+
+def test_func(func):
+    print 'Testing: ', func.__name__, 'PASSED: ', func()
+    if func():
+        return 1
+    else:
+        return 0
+
+def test():
+    print '***************************************************'
+    print 'BEGIN TESTING'
+    print ''
+    func_list = [
+        test_bot_init,
+        ]
+    passed = sum([test_func(function) for function in func_list])
+    total = len(func_list)
+    print ''
+    print 'PASSED: ', passed
+    print 'FAILED: ', total - passed
+
+        
     
