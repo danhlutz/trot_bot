@@ -1,16 +1,36 @@
 #trot_bot
 
+import random, re
 from collections import defaultdict
+
+from bs4 import BeautifulSoup
+import requests
 
 
 
 class Bot:
 
     def __init__(self):
+        # list of starter words
         self.start_words = []
+        # dictionary of two word pairs, and the words that follow them,
+        # stored as a list
         self.trigrams = defaultdict(list)
 
-# scrape a page
+    def scrape_page(self, url):
+        html = requests.get(url).text
+        soup = BeautifulSoup(html, 'html5lib')
+
+        
+        content = soup.find('div', 'article-body')
+        regex = r"[\w']+|[\.]"
+
+        self.wkg_document = []
+
+        for paragraph in soup('p'):
+            words = re.findall(regex, fix_unicode(paragraph.text))
+            self.wkg_document.extend(words)
+# scrape a page and return a document 
 
 # get a request from the Trotsky Internet Archive
 
@@ -63,6 +83,12 @@ def test_fix_unicode():
     apos2 = u"\u2019"
     return fix_unicode(apos) == "'" and fix_unicode(apos2) == "'"
 
+def test_scrape():
+    trotsky = Bot()
+    url = "https://www.marxists.org/archive/trotsky/1938/tp/tpdiscuss.htm"
+    trotsky.scrape_page(url)
+    return len(trotsky.wkg_document) == 5541
+
 
 
 def test_func(func):
@@ -79,6 +105,7 @@ def test():
     func_list = [
         test_bot_init,
         test_fix_unicode,
+        test_scrape
         ]
     passed = sum([test_func(function) for function in func_list])
     total = len(func_list)
