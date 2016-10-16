@@ -36,7 +36,7 @@ class Bot:
  
     def add_trigrams(self):
         new_trigrams = zip(self.wkd_document, \
-                       self.wkg_document[1:] \
+                       self.wkg_document[1:], \
                        self.wkg_document[2:])
         for prev, current, next in new_trigrams:
             if prev == '.':
