@@ -102,7 +102,20 @@ def test_add_trigrams():
     url = 'https://www.marxists.org/archive/trotsky/1940/08/hitsarmies.htm'
     trotsky.scrape_page(url)
     trotsky.add_trigrams()
+    
     return trotsky.start_words[0] == u'First'
+    
+def test_add_trigrams2():
+    trotsky = Bot()
+    url = 'https://www.marxists.org/archive/trotsky/1940/08/hitsarmies.htm'
+    trotsky.scrape_page(url)
+    trotsky.add_trigrams()
+    len1 = len(trotsky.start_words)
+    url = 'https://www.marxists.org/archive/trotsky/1940/08/letter11.htm'
+    trotsky.scrape_page(url)
+    trotsky.add_trigrams()
+    
+    return len(trotsky.start_words) > len1
     
 
 
@@ -122,7 +135,8 @@ def test():
         test_bot_init,
         test_fix_unicode,
         test_scrape,
-        test_add_trigrams
+        test_add_trigrams,
+        test_add_trigrams2
         ]
     passed = sum([test_func(function) for function in func_list])
     total = len(func_list)
