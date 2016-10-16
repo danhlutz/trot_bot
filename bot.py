@@ -35,7 +35,7 @@ class Bot:
             self.wkg_document.extend(words)
  
     def add_trigrams(self):
-        new_trigrams = zip(self.wkd_document, \
+        new_trigrams = zip(self.wkg_document, \
                        self.wkg_document[1:], \
                        self.wkg_document[2:])
         for prev, current, next in new_trigrams:
@@ -95,7 +95,15 @@ def test_scrape():
     trotsky = Bot()
     url = "https://www.marxists.org/archive/trotsky/1940/07/letter04.htm"
     trotsky.scrape_page(url)
-    return len(trotsky.wkg_document) > 0 
+    return len(trotsky.wkg_document) > 0
+
+def test_add_trigrams():
+    trotsky = Bot()
+    url = 'https://www.marxists.org/archive/trotsky/1940/08/hitsarmies.htm'
+    trotsky.scrape_page(url)
+    trotsky.add_trigrams()
+    return trotsky.start_words[0] == u'First'
+    
 
 
 
@@ -113,7 +121,8 @@ def test():
     func_list = [
         test_bot_init,
         test_fix_unicode,
-        test_scrape
+        test_scrape,
+        test_add_trigrams
         ]
     passed = sum([test_func(function) for function in func_list])
     total = len(func_list)
