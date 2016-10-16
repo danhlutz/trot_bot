@@ -18,6 +18,7 @@ class Bot:
         self.trigrams = defaultdict(list)
 
     def scrape_page(self, url):
+        # scrape single url and return a list of words
         html = requests.get(url).text
         soup = BeautifulSoup(html, 'html5lib')
 
@@ -32,11 +33,16 @@ class Bot:
         for paragraph in soup('p'):
             words = re.findall(regex, fix_unicode(paragraph.text))
             self.wkg_document.extend(words)
-# scrape a page and return a document 
+ 
+    def add_trigrams(self):
+        new_trigrams = zip(self.wkd_document, \
+                       self.wkg_document[1:] \
+                       self.wkg_document[2:])
+        for prev, current, next in new_trigrams:
+            if prev == '.':
+                (self.start_words).append(current)
+            self.trigrams[(prev, current)].append(next)
 
-# get a request from the Trotsky Internet Archive
-
-# divide up the request into words
 
 # zip(doc, doc[1:], doc[2:]
 # add doc and doc[1:] to a dict, and append doc[2:]
