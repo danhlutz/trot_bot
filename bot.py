@@ -56,9 +56,18 @@ class Bot:
                 return final[:-2] + current
             
 
-    # generate a random text string
-    # pick a start word at random
-    # keep going until you get a punctuation mark
+    # add tweetify functions
+
+    # add hashtagger
+
+    # add word shortener
+
+
+    # and tweet generator. Steps:
+    # generate random word
+    # hashtag it
+    # shorten words
+    # if < 160 characters, return it 
 
 
 
