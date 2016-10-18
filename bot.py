@@ -160,7 +160,14 @@ def test_generate_words():
     
     return len(trotsky.generate_words()) > 0
     
-
+def test_generate_fourgrams():
+    trotsky = Bot()
+    url = 'https://www.marxists.org/archive/trotsky/1940/08/hitsarmies.htm'
+    trotsky.scrape_page(url)
+    trotsky.add_fourgrams()
+    
+    return len(trotsky.generate_words_fourgrams()) > 0 and \
+           len(trotsky.start_words[0]) == 2
 
 
 def test_func(func):
@@ -180,7 +187,8 @@ def test():
         test_scrape,
         test_add_trigrams,
         test_add_trigrams2,
-        test_generate_words
+        test_generate_words,
+        test_generate_fourgrams
         ]
     passed = sum([test_func(function) for function in func_list])
     total = len(func_list)
