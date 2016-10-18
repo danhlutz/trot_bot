@@ -4,6 +4,8 @@
 
 import random, re
 from collections import defaultdict
+import cPickle as pickle
+from settings import *
 
 from bs4 import BeautifulSoup
 import requests
@@ -100,6 +102,15 @@ class Bot:
 
 def fix_unicode(text):
     return text.replace(u"\u2019", "'")
+
+def pickle_bot(bot, filename='save_bot'):
+    file_to_pickle = open(DATA_PATH + filename + '.p', 'wb')
+    
+    pickle.dump(bot, file_to_pickle)
+    file_to_pickle.close()
+    
+
+
 
 
 
