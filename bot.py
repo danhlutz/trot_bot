@@ -1,4 +1,5 @@
 #trot_bot
+# but Mark should really up his game and learn git
 
 import random, re
 from collections import defaultdict
