@@ -50,7 +50,7 @@ class Bot:
                        self.wkg_document[3:])
         for prev, current1, current2, next in new_fourgrams:
             if prev == '.':
-                (self.start_words).append(current1, current2)
+                (self.start_words).append((current1, current2))
             self.trigrams[(prev, current1, current2)].append(next)
 
     def generate_words(self):
