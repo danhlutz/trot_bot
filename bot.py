@@ -64,6 +64,19 @@ class Bot:
             if current in ['.', '?', '!']:
                 final = " ".join(result)
                 return final[:-2] + current
+
+    def generate_words_fourgrams(self):
+        current1, current2 = random.choice(self.start_words)
+        prev = '.'
+        result = [current1, current2]
+        while True:
+            next_word = random.choice(self.trigrams[(prev, current1, current2)])
+            prev, current1, current2 = current1, current2, next_word
+            result.append(current2)
+            if current2 in ['.', '?', '!']:
+                final = " ".join(result)
+                return final[:-2] + current2
+    
             
 
     # add tweetify functions
