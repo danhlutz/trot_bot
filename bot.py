@@ -52,14 +52,14 @@ class Bot:
                        self.wkg_document[1:], \
                        self.wkg_document[2:], \
                        self.wkg_document[3:])
-        for prev, current1, current2, next in new_fourgrams:
+        for prev, current1, current2, next_word in new_fourgrams:
             if prev == '.':
                 (self.start_words).append((current1, current2))
-            self.trigrams[(prev, current1, current2)].append(next)
-        for key, value in self.trigrams.items():
-            if value == []:
-                if verbose: print 'Deleting: ', key, value
-                del self.trigrams[key]
+            self.trigrams[(prev, current1, current2)].append(next_word)
+##        for key, value in self.trigrams.items():
+##            if len(value) == 0:
+##                if verbose: print 'Deleting: ', key, value
+##                del self.trigrams[key]
 
 ##    def generate_words(self):
 ##        current = random.choice(self.start_words)
@@ -73,12 +73,17 @@ class Bot:
 ##                final = " ".join(result)
 ##                return final[:-2] + current
 
-    def generate_words_fourgrams(self):
+    def generate_words_fourgrams(self, verbose=False):
         current1, current2 = random.choice(self.start_words)
         prev = '.'
         result = [current1, current2]
         while True:
-            next_word = random.choice(self.trigrams[(prev, current1, current2)])
+            next_word_list = self.trigrams[(prev, current1, current2)]
+            if verbose:
+                print prev, current1, current2
+                print next_word_list
+
+            next_word = random.choice(next_word_list)
             prev, current1, current2 = current1, current2, next_word
             result.append(current2)
             if current2 in ['.', '?', '!']:
