@@ -102,6 +102,12 @@ def Crawler():
     def __init__(self):
         self.to_get_links = {}
         self.to_scrape = {}
+
+
+    # helper functions needed
+    # return true or false if it is a page in the TIA
+    # return true or false if it is an index page -- need to get links
+    # return true or fale if it is a page to be scraped
         
 
 
