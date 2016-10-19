@@ -47,7 +47,7 @@ class Bot:
 ##                (self.start_words).append(current)
 ##            self.trigrams[(prev, current)].append(next)
 ##
-    def add_fourgrams(self):
+    def add_fourgrams(self, verbose=False):
         new_fourgrams = zip(self.wkg_document, \
                        self.wkg_document[1:], \
                        self.wkg_document[2:], \
@@ -56,6 +56,10 @@ class Bot:
             if prev == '.':
                 (self.start_words).append((current1, current2))
             self.trigrams[(prev, current1, current2)].append(next)
+        for key, value in self.trigrams.items():
+            if value == []:
+                if verbose: print 'Deleting: ', key, value
+                del self.trigrams[key]
 
 ##    def generate_words(self):
 ##        current = random.choice(self.start_words)
