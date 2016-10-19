@@ -97,6 +97,13 @@ class Bot:
     # if < 160 characters, return it 
 
 
+def Crawler():
+
+    def __init__(self):
+        self.to_get_links = {}
+        self.to_scrape = {}
+        
+
 
 # HELPER FUNCTIONS
 
