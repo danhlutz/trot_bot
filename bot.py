@@ -195,6 +195,16 @@ def test_generate_fourgrams():
     return len(trotsky.generate_words_fourgrams()) > 0 and \
            len(trotsky.start_words[0]) == 2
 
+def test_keys():
+    trotsky = Bot()
+    url = 'https://www.marxists.org/archive/trotsky/1940/08/hitsarmies.htm'
+    trotsky.scrape_page(url)
+    trotsky.add_fourgrams()
+    n = 0
+
+    for key in trotsky.trigrams.keys():
+        if len(key) == 3: n+= 1
+    return n == len(trotsky.trigrams.items())
 
 def test_func(func):
     print 'Testing: ', func.__name__, '\t','PASSED: ', func()
@@ -211,10 +221,11 @@ def test():
         test_bot_init,
         test_fix_unicode,
         test_scrape,
-        test_add_trigrams,
-        test_add_trigrams2,
-        test_generate_words,
-        test_generate_fourgrams
+        #test_add_trigrams,
+        #test_add_trigrams2,
+        #test_generate_words,
+        test_generate_fourgrams,
+        test_keys
         ]
     passed = sum([test_func(function) for function in func_list])
     total = len(func_list)
