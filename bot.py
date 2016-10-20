@@ -55,6 +55,7 @@ class Bot:
         for prev, current1, current2, next_word in new_fourgrams:
             if prev == '.':
                 (self.start_words).append((current1, current2))
+            if current2 == '2015' and verbose: print next_word
             self.trigrams[(prev, current1, current2)].append(next_word)
 ##        for key, value in self.trigrams.items():
 ##            if len(value) == 0:
@@ -79,9 +80,11 @@ class Bot:
         result = [current1, current2]
         while True:
             next_word_list = self.trigrams[(prev, current1, current2)]
-            if verbose:
-                print prev, current1, current2
-                print next_word_list
+            if next_word_list == []:
+                current1, current2 = random.choice(self.start_words)
+                prev = '.'
+                result = [current1, current2]
+                continue
 
             next_word = random.choice(next_word_list)
             prev, current1, current2 = current1, current2, next_word
@@ -214,6 +217,8 @@ def test_keys():
     for key in trotsky.trigrams.keys():
         if len(key) == 3: n+= 1
     return n == len(trotsky.trigrams.items())
+
+
 
 def test_func(func):
     print 'Testing: ', func.__name__, '\t','PASSED: ', func()
