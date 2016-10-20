@@ -267,6 +267,9 @@ def test_keys():
     return n == len(trotsky.trigrams.items())
 
 
+def test_is_archive_link():
+    return is_archive_link('https://www.marxists.org/archive/trotsky/1924/ffyci-1/app10.htm') \
+           and is_archive_link('http://www.indexbooks.co.uk/') == False
 
 def test_func(func):
     print 'Testing: ', func.__name__, '\t','PASSED: ', func()
@@ -291,7 +294,8 @@ def test():
         test_generate_fourgrams,
         test_keys,
         test_generate_lots_of_fourgrams,
-        test_generate_lots_of_fourgrams2
+        test_generate_lots_of_fourgrams2,
+        test_is_archive_link
         ]
     passed = sum([test_func(function) for function in func_list])
     total = len(func_list)
