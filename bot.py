@@ -120,6 +120,14 @@ def Crawler():
 def fix_unicode(text):
     return text.replace(u"\u2019", "'")
 
+def is_archive_link(url):
+    regex = r'archive/trotsky'
+    result = re.search(regex, url)
+    if result == None:
+        return False
+    else:
+        return True
+
 def pickle_bot(bot, filename='save_bot'):
     file_to_pickle = open(DATA_PATH + filename + '.p', 'wb')
     
@@ -216,6 +224,8 @@ def test_func(func):
         return 1
     else:
         return 0
+
+
 
 def test():
     print '***************************************************'
