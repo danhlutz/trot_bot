@@ -207,6 +207,40 @@ def test_generate_fourgrams():
     return len(trotsky.generate_words_fourgrams()) > 0 and \
            len(trotsky.start_words[0]) == 2
 
+def test_generate_lots_of_fourgrams():
+    trotsky = Bot()
+    url = 'https://www.marxists.org/archive/trotsky/1940/08/hitsarmies.htm'
+    trotsky.scrape_page(url)
+    trotsky.add_fourgrams()
+
+    n = 0
+
+    for i in range(100):
+        try:
+            trotsky.generate_words_fourgrams()
+            n += 1
+        except IndexError:
+            continue
+    return n == 100
+
+
+def test_generate_lots_of_fourgrams2():
+    trotsky = Bot()
+    url = 'https://www.marxists.org/archive/trotsky/1924/lit_revo/ch05.htm'
+    trotsky.scrape_page(url)
+    trotsky.add_fourgrams()
+
+    n = 0
+
+    for i in range(100):
+        try:
+            trotsky.generate_words_fourgrams()
+            n += 1
+        except IndexError:
+            continue
+    return n == 100
+           
+
 def test_keys():
     trotsky = Bot()
     url = 'https://www.marxists.org/archive/trotsky/1940/08/hitsarmies.htm'
@@ -239,7 +273,9 @@ def test():
         #test_add_trigrams2,
         #test_generate_words,
         test_generate_fourgrams,
-        test_keys
+        test_keys,
+        test_generate_lots_of_fourgrams,
+        test_generate_lots_of_fourgrams2
         ]
     passed = sum([test_func(function) for function in func_list])
     total = len(func_list)
