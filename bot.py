@@ -302,7 +302,7 @@ def test_is_footnote():
 
 
 def test_func(func):
-    print 'Testing: ', func.__name__, '\t','PASSED: ', func()
+    print 'Testing: ', func.__name__, '\n','PASSED: ', func()
     if func():
         return 1
     else:
