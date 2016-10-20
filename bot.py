@@ -52,14 +52,15 @@ class Bot:
                        self.wkg_document[1:], \
                        self.wkg_document[2:], \
                        self.wkg_document[3:])
-        for prev, current1, current2, next in new_fourgrams:
+        for prev, current1, current2, next_word in new_fourgrams:
             if prev == '.':
                 (self.start_words).append((current1, current2))
-            self.trigrams[(prev, current1, current2)].append(next)
-        for key, value in self.trigrams.items():
-            if value == []:
-                if verbose: print 'Deleting: ', key, value
-                del self.trigrams[key]
+            if current2 == '2015' and verbose: print next_word
+            self.trigrams[(prev, current1, current2)].append(next_word)
+##        for key, value in self.trigrams.items():
+##            if len(value) == 0:
+##                if verbose: print 'Deleting: ', key, value
+##                del self.trigrams[key]
 
 ##    def generate_words(self):
 ##        current = random.choice(self.start_words)
@@ -73,12 +74,24 @@ class Bot:
 ##                final = " ".join(result)
 ##                return final[:-2] + current
 
-    def generate_words_fourgrams(self):
+    def generate_words_fourgrams(self, verbose=False):
         current1, current2 = random.choice(self.start_words)
         prev = '.'
         result = [current1, current2]
         while True:
-            next_word = random.choice(self.trigrams[(prev, current1, current2)])
+            next_word_list = self.trigrams[(prev, current1, current2)]
+            if next_word_list == []:
+                if verbose:
+                    print '***********************'
+                    print 'GOT ONE: ', prev, current1, \
+                   current2
+                    print '***********************'
+                current1, current2 = random.choice(self.start_words)
+                prev = '.'
+                result = [current1, current2]
+                continue
+
+            next_word = random.choice(next_word_list)
             prev, current1, current2 = current1, current2, next_word
             result.append(current2)
             if current2 in ['.', '?', '!']:
@@ -127,6 +140,7 @@ def is_archive_link(url):
         return False
     else:
         return True
+
 
 def pickle_bot(bot, filename='save_bot'):
     file_to_pickle = open(DATA_PATH + filename + '.p', 'wb')
@@ -207,6 +221,40 @@ def test_generate_fourgrams():
     return len(trotsky.generate_words_fourgrams()) > 0 and \
            len(trotsky.start_words[0]) == 2
 
+def test_generate_lots_of_fourgrams():
+    trotsky = Bot()
+    url = 'https://www.marxists.org/archive/trotsky/1940/08/hitsarmies.htm'
+    trotsky.scrape_page(url)
+    trotsky.add_fourgrams()
+
+    n = 0
+
+    for i in range(100):
+        try:
+            trotsky.generate_words_fourgrams()
+            n += 1
+        except IndexError:
+            continue
+    return n == 100
+
+
+def test_generate_lots_of_fourgrams2():
+    trotsky = Bot()
+    url = 'https://www.marxists.org/archive/trotsky/1924/lit_revo/ch05.htm'
+    trotsky.scrape_page(url)
+    trotsky.add_fourgrams()
+
+    n = 0
+
+    for i in range(100):
+        try:
+            trotsky.generate_words_fourgrams()
+            n += 1
+        except IndexError:
+            continue
+    return n == 100
+           
+
 def test_keys():
     trotsky = Bot()
     url = 'https://www.marxists.org/archive/trotsky/1940/08/hitsarmies.htm'
@@ -217,6 +265,8 @@ def test_keys():
     for key in trotsky.trigrams.keys():
         if len(key) == 3: n+= 1
     return n == len(trotsky.trigrams.items())
+
+
 
 def test_func(func):
     print 'Testing: ', func.__name__, '\t','PASSED: ', func()
@@ -239,7 +289,9 @@ def test():
         #test_add_trigrams2,
         #test_generate_words,
         test_generate_fourgrams,
-        test_keys
+        test_keys,
+        test_generate_lots_of_fourgrams,
+        test_generate_lots_of_fourgrams2
         ]
     passed = sum([test_func(function) for function in func_list])
     total = len(func_list)
