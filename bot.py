@@ -133,6 +133,8 @@ def Crawler():
 def fix_unicode(text):
     return text.replace(u"\u2019", "'")
 
+
+
 def pickle_bot(bot, filename='save_bot'):
     file_to_pickle = open(DATA_PATH + filename + '.p', 'wb')
     
