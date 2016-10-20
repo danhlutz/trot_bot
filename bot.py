@@ -81,6 +81,11 @@ class Bot:
         while True:
             next_word_list = self.trigrams[(prev, current1, current2)]
             if next_word_list == []:
+                if verbose:
+                    print '***********************'
+                    print 'GOT ONE: ', prev, current1, \
+                   current2
+                    print '***********************'
                 current1, current2 = random.choice(self.start_words)
                 prev = '.'
                 result = [current1, current2]
