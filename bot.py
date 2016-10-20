@@ -289,6 +289,11 @@ def test_is_archive_link():
     return is_archive_link('https://www.marxists.org/archive/trotsky/1924/ffyci-1/app10.htm') \
            and is_archive_link('http://www.indexbooks.co.uk/') == False
 
+
+def test_is_index():
+    return is_index('https://www.marxists.org/archive/trotsky/1924/ffyci-2/07.htm') == False \
+           and is_index('https://www.marxists.org/archive/trotsky/1930/hrr/index.htm')
+
 def test_func(func):
     print 'Testing: ', func.__name__, '\t','PASSED: ', func()
     if func():
@@ -313,7 +318,8 @@ def test():
         test_keys,
         test_generate_lots_of_fourgrams,
         test_generate_lots_of_fourgrams2,
-        test_is_archive_link
+        test_is_archive_link,
+        test_is_index
         ]
     passed = sum([test_func(function) for function in func_list])
     total = len(func_list)
