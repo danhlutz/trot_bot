@@ -151,6 +151,14 @@ def is_index(url):
     else:
         return True
 
+def is_footnote(url):
+    regex = r'[#]'
+    result = re.search(regex, url)
+    if result == None:
+        return False
+    else:
+        return True
+
 
 def pickle_bot(bot, filename='save_bot'):
     file_to_pickle = open(DATA_PATH + filename + '.p', 'wb')
