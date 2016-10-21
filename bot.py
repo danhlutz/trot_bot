@@ -166,6 +166,12 @@ def find_last_slash(url):
     return slash
 
 
+def combine_links(mother, daughter):
+    if daughter[:2] == '..':
+        return mother[:find_next_to_last_slash(mother)] + daughter[2:]
+    return mother[:find_last_slash(mother) + 1] + daughter
+
+
 def pickle_bot(bot, filename='save_bot'):
     file_to_pickle = open(DATA_PATH + filename + '.p', 'wb')
     
