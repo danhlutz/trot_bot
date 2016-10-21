@@ -141,6 +141,15 @@ def is_archive(url):
            (url[-3:] == 'htm' or url[-4:] == 'html')
 
 
+def classify_link(url):
+    if is_archive(url) == False:
+        return None
+    if url[-9:] == 'index.htm' or url[-10:] == 'index.html':
+        return 'index'
+    else:
+        return 'content'
+
+
 def pickle_bot(bot, filename='save_bot'):
     file_to_pickle = open(DATA_PATH + filename + '.p', 'wb')
     
