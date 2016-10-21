@@ -150,6 +150,15 @@ def classify_link(url):
         return 'content'
 
 
+def find_next_to_last_slash(url):
+    slash = 0
+    for i, char in enumerate(url):
+        if char == '/':
+            next_to_last = slash
+            slash = i
+    return next_to_last
+
+
 def find_last_slash(url):
     for i, char in enumerate(url):
         if char == '/':
