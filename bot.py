@@ -133,31 +133,7 @@ def Crawler():
 def fix_unicode(text):
     return text.replace(u"\u2019", "'")
 
-def is_archive_link(url):
-    regex = r'archive/trotsky'
-    result = re.search(regex, url)
-    if result == None:
-        return False
-    else:
-        return True
 
-def is_index(url):
-    if is_archive_link(url) == False:
-        return False
-    regex = r'index.htm$'
-    result = re.search(regex, url)
-    if result == None:
-        return False
-    else:
-        return True
-
-def is_footnote(url):
-    regex = r'[#]'
-    result = re.search(regex, url)
-    if result == None:
-        return False
-    else:
-        return True
 
 
 def pickle_bot(bot, filename='save_bot'):
