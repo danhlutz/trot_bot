@@ -320,6 +320,11 @@ def test_classify():
            and sum([classify_link(link) == None for link in not_stuff]) \
            == len(not_stuff)
 
+def test_find_last_slash():
+    return find_last_slash('/') == 0 and \
+           find_last_slash('../') == 2 and \
+           find_last_slash('../../') == 5
+
 
     
 def test_func(func):
@@ -347,7 +352,8 @@ def test():
         test_generate_lots_of_fourgrams,
         test_generate_lots_of_fourgrams2,
         test_is_archive,
-        test_classify
+        test_classify,
+        test_find_last_slash
         ]
     passed = sum([test_func(function) for function in func_list])
     total = len(func_list)
