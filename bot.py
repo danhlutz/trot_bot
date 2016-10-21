@@ -117,8 +117,8 @@ class Bot:
 def Crawler():
 
     def __init__(self):
-        self.to_get_links = {}
-        self.to_scrape = {}
+        self.content = {}
+        self.indexes = {}
 
 
     # helper functions needed
