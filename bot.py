@@ -114,11 +114,17 @@ class Bot:
     # if < 160 characters, return it 
 
 
-def Crawler():
+class Crawler():
 
     def __init__(self):
         self.content = {}
         self.indexes = {}
+
+    def add_index(self, url):
+        if url in self.indexes:
+            pass
+        else:
+            self.indexes[url] = False        
 
 
     # helper functions needed
