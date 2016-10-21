@@ -290,6 +290,31 @@ def test_is_archive():
            sum([is_archive(link) for link in not_archives]) == 0
            
 
+
+def test_classify():
+    contents = ['../1940/xx/party.htm', 
+                '../1940/08/last-article.htm',
+                '../1940/xx/jewish.htm',
+                '../1940/05/stalin.htm'
+                ]
+    indexes = ['../china/index.htm',
+               '../britain/index.htm',
+               '../germany/index.htm',
+               '../spain/index.htm'
+               ]
+    not_stuff = ['../../../xlang/trotsky.htm',
+                 '../../../admin/volunteers/biographies/dwalters.htm',
+                 '#a1934'
+                 ]
+    return sum([classify_link(link) == 'content' for link in contents]) \
+           == len(contents) \
+           and sum([classify_link(link) == 'index' for link in indexes]) \
+           == len(indexes) \
+           and sum([classify_link(link) == None for link in not_stuff]) \
+           == len(not_stuff)
+
+
+    
 def test_func(func):
     print 'Testing: ', func.__name__, '\t','PASSED: ', func()
     if func():
@@ -314,7 +339,8 @@ def test():
         test_keys,
         test_generate_lots_of_fourgrams,
         test_generate_lots_of_fourgrams2,
-        test_is_archive
+        test_is_archive,
+        test_classify
         ]
     passed = sum([test_func(function) for function in func_list])
     total = len(func_list)
