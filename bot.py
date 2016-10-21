@@ -136,9 +136,9 @@ def fix_unicode(text):
 
 def is_archive(url):
     # first three letters are two dots and a slash
-    return url[:3] == '../' and \
-           url[3:5] != '..' and \
-           (url[-3:] == 'htm' or url[-4:] == 'html')
+    return (url[-3:] == 'htm' or url[-4:] == 'html') and \
+           ((url[:3] == '../' and url[3:5] != '..') or \
+            (url[:1] != '.'))
 
 
 def classify_link(url):
@@ -285,7 +285,9 @@ def test_is_archive():
     archives = ['../1924/ffyci-1/app02.htm',
                 '../1924/ffyci-1/app03.htm',
                 '../1924/ffyci-1/app04.htm',
-                '../1924/ffyci-1/ch01.htm'
+                '../1924/ffyci-1/ch01.htm',
+                'rp03.htm',
+                'rp-intro.htm'
                 ]
     not_archives = ['../military-pdf/Military-Writings-Trotsky-v1.pdf',
                     '#a1922',
