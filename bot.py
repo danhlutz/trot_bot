@@ -124,8 +124,13 @@ class Crawler():
         if url in self.indexes:
             pass
         else:
-            self.indexes[url] = False        
+            self.indexes[url] = False
 
+    def add_content(self, url):
+        if url in self.content:
+            pass
+        else:
+            self.content[url] = False
 
     # helper functions needed
     # return true or false if it is a page in the TIA
