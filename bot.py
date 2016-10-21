@@ -134,6 +134,11 @@ def fix_unicode(text):
     return text.replace(u"\u2019", "'")
 
 
+def is_archive(url):
+    if url[:3] == '../' and url[3:5] != '..':
+        return True
+    else:
+        return False
 
 
 def pickle_bot(bot, filename='save_bot'):
@@ -261,20 +266,6 @@ def test_keys():
     return n == len(trotsky.trigrams.items())
 
 
-def test_is_archive_link():
-    return is_archive_link('https://www.marxists.org/archive/trotsky/1924/ffyci-1/app10.htm') \
-           and is_archive_link('http://www.indexbooks.co.uk/') == False
-
-
-def test_is_index():
-    return is_index('https://www.marxists.org/archive/trotsky/1924/ffyci-2/07.htm') == False \
-           and is_index('https://www.marxists.org/archive/trotsky/1930/hrr/index.htm')
-
-
-def test_is_footnote():
-    return is_footnote('https://www.marxists.org/archive/trotsky/1930/02/syndicalism.htm') \
-           == False and \
-           is_footnote('https://www.marxists.org/archive/trotsky/1931/tpr/pr08.htm#a1')
 
 
 def test_func(func):
@@ -300,10 +291,7 @@ def test():
         test_generate_fourgrams,
         test_keys,
         test_generate_lots_of_fourgrams,
-        test_generate_lots_of_fourgrams2,
-        test_is_archive_link,
-        test_is_index,
-        test_is_footnote
+        test_generate_lots_of_fourgrams2
         ]
     passed = sum([test_func(function) for function in func_list])
     total = len(func_list)
