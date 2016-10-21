@@ -150,6 +150,13 @@ def classify_link(url):
         return 'content'
 
 
+def find_last_slash(url):
+    for i, char in enumerate(url):
+        if char == '/':
+            slash = i
+    return slash
+
+
 def pickle_bot(bot, filename='save_bot'):
     file_to_pickle = open(DATA_PATH + filename + '.p', 'wb')
     
