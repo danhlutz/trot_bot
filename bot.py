@@ -357,6 +357,18 @@ def test_combine():
                          'http://example.com/mystuff/friendex.htm'
 
 
+def test_add_index():
+    y = Crawler()
+    y.add_index('stuff')
+    y.add_index('fruit')
+    y.add_index('apples')
+    y.indexes['stuff'] = True
+    y.add_index('stuff')
+    y.add_index('apples')
+    return y.indexes['stuff'] == True and \
+           y.indexes['fruit'] == False and \
+           y.indexes['apples'] == False
+
 
 def test_func(func):
     print 'Testing: ', func.__name__, '\t','PASSED: ', func()
@@ -385,7 +397,8 @@ def test():
         test_is_archive,
         test_classify,
         test_find_last_slash,
-        test_combine
+        test_combine,
+        test_add_index
         ]
     passed = sum([test_func(function) for function in func_list])
     total = len(func_list)
