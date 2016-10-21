@@ -135,10 +135,10 @@ def fix_unicode(text):
 
 
 def is_archive(url):
-    if url[:3] == '../' and url[3:5] != '..':
-        return True
-    else:
-        return False
+    # first three letters are two dots and a slash
+    return url[:3] == '../' and \
+           url[3:5] != '..' and \
+           (url[-3:] == 'htm' or url[-4:] == 'html')
 
 
 def pickle_bot(bot, filename='save_bot'):
@@ -265,11 +265,24 @@ def test_keys():
         if len(key) == 3: n+= 1
     return n == len(trotsky.trigrams.items())
 
-
-
+def test_is_archive():
+    archives = ['../1924/ffyci-1/app02.htm',
+                '../1924/ffyci-1/app03.htm',
+                '../1924/ffyci-1/app04.htm',
+                '../1924/ffyci-1/ch01.htm'
+                ]
+    not_archives = ['../military-pdf/Military-Writings-Trotsky-v1.pdf',
+                    '#a1922',
+                    '#a1923',
+                    '#a1924',
+                    '../../../../admin/legal/cc/by-sa.htm'
+                    ]
+    return sum([is_archive(link) for link in archives]) == len(archives) and \
+           sum([is_archive(link) for link in not_archives]) == 0
+           
 
 def test_func(func):
-    print 'Testing: ', func.__name__, '\n','PASSED: ', func()
+    print 'Testing: ', func.__name__, '\t','PASSED: ', func()
     if func():
         return 1
     else:
@@ -291,7 +304,8 @@ def test():
         test_generate_fourgrams,
         test_keys,
         test_generate_lots_of_fourgrams,
-        test_generate_lots_of_fourgrams2
+        test_generate_lots_of_fourgrams2,
+        test_is_archive
         ]
     passed = sum([test_func(function) for function in func_list])
     total = len(func_list)
