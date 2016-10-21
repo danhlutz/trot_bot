@@ -343,7 +343,15 @@ def test_find_last_slash():
            find_last_slash('../../') == 5
 
 
-    
+def test_combine():
+    return combine_links('http://cnn.com/stuff/here.htm', 'friends.htm') == \
+           'http://cnn.com/stuff/friends.htm' and \
+           combine_links('http://example.com/mystuff/archives/index.htm', \
+                         '../friendex.htm') == \
+                         'http://example.com/mystuff/friendex.htm'
+
+
+
 def test_func(func):
     print 'Testing: ', func.__name__, '\t','PASSED: ', func()
     if func():
@@ -370,7 +378,8 @@ def test():
         test_generate_lots_of_fourgrams2,
         test_is_archive,
         test_classify,
-        test_find_last_slash
+        test_find_last_slash,
+        test_combine
         ]
     passed = sum([test_func(function) for function in func_list])
     total = len(func_list)
