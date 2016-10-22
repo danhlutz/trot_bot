@@ -146,6 +146,8 @@ class Crawler():
                 self.content.add(full_link)
             elif classify_link(daughter_url) == 'index':
                 full_link = combine_links(mother_url, daughter_url)
+                if full_link == 'https://www.marxists.org/archive/trotsky/index.htm':
+                    continue
                 self.add_index(full_link)
 
     def pickle_crawler(self, filename='pickle_crawler'):
@@ -179,7 +181,7 @@ class Crawler():
             print 'Indexes: ', len(self.indexes), \
                   'Content: ', len(self.content)
             print 'Indexes crawled: ', n
-            sleep(20)
+            sleep(10)
         self.pickle_crawler()
             
         
