@@ -117,7 +117,7 @@ class Bot:
 class Crawler():
 
     def __init__(self, seed='https://www.marxists.org/archive/trotsky/works/index.htm'):
-        self.content = {}
+        self.content = set()
         self.indexes = {}
         self.add_index(seed)
 
@@ -127,11 +127,11 @@ class Crawler():
         else:
             self.indexes[url] = False
 
-    def add_content(self, url):
-        if url in self.content:
-            pass
-        else:
-            self.content[url] = False
+##    def add_content(self, url):
+##        if url in self.content:
+##            pass
+##        else:
+##            self.content[url] = False
 
     def scrape_page(self, mother_url, verbose=False):
         html = requests.get(mother_url).text
@@ -142,7 +142,7 @@ class Crawler():
             if daughter_url == None: continue
             if classify_link(daughter_url) == 'content':
                 full_link = combine_links(mother_url, daughter_url)
-                self.add_content(full_link)
+                self.content.add(full_link)
             elif classify_link(daughter_url) == 'index':
                 full_link = combine_links(mother_url, daughter_url)
                 self.add_index(full_link)
