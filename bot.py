@@ -6,6 +6,7 @@ import random, re
 from collections import defaultdict
 import cPickle as pickle
 from settings import *
+from time import sleep
 
 from bs4 import BeautifulSoup
 import requests
@@ -165,6 +166,25 @@ class Crawler():
             if value == False:
                 return key
         return None
+
+    def crawl(self):
+        n = 0
+        while sum([value for value in self.indexes.values()]) < \
+              len(self.indexes):
+            n += 1
+            link_to_crawl = self.find_unscraped_link()
+            self.indexes[link_to_crawl] = True
+            self.scrape_page(link_to_crawl)
+            print 'Crawled: ', link_to_crawl
+            print 'Indexes: ', len(self.indexes), \
+                  'Content: ', len(self.content)
+            print 'Indexes crawled: ', n
+            sleep(20)
+        self.pickle_crawler()
+            
+        
+        
+    
 
     
 
@@ -416,6 +436,11 @@ def test_crawler_scrape():
     y.scrape_page('https://www.marxists.org/archive/trotsky/britain/index.htm')
     return len(y.content) == 9
 
+def test_find_unscraped_link():
+    y = Crawler()
+    y.scrape_page('https://www.marxists.org/archive/trotsky/britain/index.htm')
+    return y.find_unscraped_link() != None
+
 
 
 def test_func(func):
@@ -447,7 +472,8 @@ def test():
         test_find_last_slash,
         test_combine,
         test_add_index,
-        test_crawler_scrape
+        test_crawler_scrape,
+        test_find_unscraped_link
         ]
     passed = sum([test_func(function) for function in func_list])
     total = len(func_list)
