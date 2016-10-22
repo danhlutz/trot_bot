@@ -404,17 +404,7 @@ def test_add_index():
            y.indexes['apples'] == False
 
 
-def test_add_content():
-    y = Crawler()
-    y.add_content('mao')
-    y.add_content('steve')
-    y.add_content('rosa')
-    y.content['rosa'] = True
-    y.add_content('rosa')
-    y.add_content('mao')
-    return y.content['rosa'] == True and \
-           y.content['mao'] == False and \
-           y.content['steve'] == False
+
 
 
 def test_func(func):
@@ -445,8 +435,7 @@ def test():
         test_classify,
         test_find_last_slash,
         test_combine,
-        test_add_index,
-        test_add_content
+        test_add_index
         ]
     passed = sum([test_func(function) for function in func_list])
     total = len(func_list)
