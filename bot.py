@@ -404,6 +404,10 @@ def test_add_index():
            y.indexes['apples'] == False
 
 
+def test_crawler_scrape():
+    y = Crawler()
+    y.scrape_page('https://www.marxists.org/archive/trotsky/britain/index.htm')
+    return len(y.content) == 9
 
 
 
@@ -435,7 +439,8 @@ def test():
         test_classify,
         test_find_last_slash,
         test_combine,
-        test_add_index
+        test_add_index,
+        test_crawler_scrape
         ]
     passed = sum([test_func(function) for function in func_list])
     total = len(func_list)
