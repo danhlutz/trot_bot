@@ -147,6 +147,20 @@ class Crawler():
                 full_link = combine_links(mother_url, daughter_url)
                 self.add_index(full_link)
 
+    def pickle_crawler(self, filename='pickle_crawler'):
+        file_to_pickle = open(DATA_PATH + filename + '.p', 'wb')
+        index_and_content = (self.indexes, self.content)
+        pickle.dump(index_and_content, file_to_pickle)
+        file_to_pickle.close()
+
+
+    def load_crawler(self, filename='pickle_crawler'):
+        file_to_unpickle = open(DATA_PATH + filename + '.p', 'rb')
+        self.indexes, self.content = pickle.load(file_to_unpickle)
+        file_to_unpickle.close()
+
+    
+
     # helper functions needed
     # return true or false if it is a page in the TIA
     # return true or false if it is an index page -- need to get links
