@@ -159,6 +159,13 @@ class Crawler():
         self.indexes, self.content = pickle.load(file_to_unpickle)
         file_to_unpickle.close()
 
+
+    def find_unscraped_link(self):
+        for key, value in self.indexes.items():
+            if value == False:
+                return key
+        return None
+
     
 
     # helper functions needed
