@@ -4,3 +4,4 @@ trot_bot_notes.ipynb
 settings.py
 settings.pyc
 data/*
+.DS_Store
