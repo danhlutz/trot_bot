@@ -71,8 +71,13 @@ class Bot:
             prev, current1, current2 = current1, current2, next_word
             result.append(current2)
             if current2 in ['.', '?', '!']:
-                final = " ".join(result)
-                return final[:-2] + current2
+                result.append(current2)
+                return result
+            
+##                final = " ".join(result)
+##                return final[:-2] + current2
+
+    
     
             
 
