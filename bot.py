@@ -7,6 +7,7 @@ from collections import defaultdict
 import cPickle as pickle
 from settings import *
 from time import sleep
+import string
 
 from bs4 import BeautifulSoup
 import requests
@@ -73,7 +74,25 @@ class Bot:
             if current2 in ['.', '?', '!']:
                 result.append(current2)
                 return result
-            
+
+
+    def hashtag_words(self, word_list, verbose=False):
+        for i, word in enumerate(word_list):
+            # check to see if the word and the next word start
+            # with upper letters
+            if i != 0 and word[0] in string.uppercase and \
+               word_list[i+1][0] in string.uppercase:
+                hashtag = '#' + word + word_list[i+1]
+                if verbose: print 'GOT ONE!: ', hashtag
+
+                return word_list[:i] + [hashtag,] + word_list[i + 2:]
+        return word_list
+                
+
+
+
+
+    ## ADD FUNCTION TO TURN WORD LIST INTO SENTENCE            
 ##                final = " ".join(result)
 ##                return final[:-2] + current2
 
