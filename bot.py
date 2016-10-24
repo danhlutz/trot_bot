@@ -39,15 +39,6 @@ class Bot:
             words = re.findall(regex, fix_unicode(paragraph.text))
             self.wkg_document.extend(words)
  
-##    def add_trigrams(self):
-##        new_trigrams = zip(self.wkg_document, \
-##                       self.wkg_document[1:], \
-##                       self.wkg_document[2:])
-##        for prev, current, next in new_trigrams:
-##            if prev == '.':
-##                (self.start_words).append(current)
-##            self.trigrams[(prev, current)].append(next)
-##
     def add_fourgrams(self, verbose=False):
         new_fourgrams = zip(self.wkg_document, \
                        self.wkg_document[1:], \
@@ -58,22 +49,6 @@ class Bot:
                 (self.start_words).append((current1, current2))
             if current2 == '2015' and verbose: print next_word
             self.trigrams[(prev, current1, current2)].append(next_word)
-##        for key, value in self.trigrams.items():
-##            if len(value) == 0:
-##                if verbose: print 'Deleting: ', key, value
-##                del self.trigrams[key]
-
-##    def generate_words(self):
-##        current = random.choice(self.start_words)
-##        prev = '.'
-##        result = [current]
-##        while True:
-##            next_word = random.choice(self.trigrams[(prev, current)])
-##            prev, current = current, next_word
-##            result.append(current)
-##            if current in ['.', '?', '!']:
-##                final = " ".join(result)
-##                return final[:-2] + current
 
     def generate_words_fourgrams(self, verbose=False):
         current1, current2 = random.choice(self.start_words)
@@ -128,11 +103,6 @@ class Crawler():
         else:
             self.indexes[url] = False
 
-##    def add_content(self, url):
-##        if url in self.content:
-##            pass
-##        else:
-##            self.content[url] = False
 
     def scrape_page(self, mother_url, verbose=False):
         html = requests.get(mother_url).text
