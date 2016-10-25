@@ -22,6 +22,18 @@ class Bot:
         # dictionary of two word pairs, and the words that follow them,
         # stored as a list
         self.trigrams = defaultdict(list)
+        # a dict of short words to shorten tweets
+        self.short_words = {
+            'first': '1st',
+            'second': '2nd',
+            'third': '3rd',
+            'fourth': '4th',
+            'and': '&',
+            'international': 'intl',
+            'number': '#',
+            'about': 'abt'
+            }
+            
 
     def scrape_page(self, url):
         # scrape single url and return a list of words
