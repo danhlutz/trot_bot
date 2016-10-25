@@ -142,7 +142,17 @@ class Bot:
         return final_word_list
         #NOW WRITE A TEST FOR THIS 
                 
+    def pickle_bot(self, filename='pickled_bot'):
+        file_to_pickle = open(DATA_PATH + filename + '.p', 'wb')
+        start_words_and_trigrams = (self.start_words, self.trigrams)
+        pickle.dump(index_and_content, file_to_pickle)
+        file_to_pickle.close()
 
+
+    def load_crawler(self, filename='pickled_bot'):
+        file_to_unpickle = open(DATA_PATH + filename + '.p', 'rb')
+        self.start_words, self.trigrams = pickle.load(file_to_unpickle)
+        file_to_unpickle.close()
 
 
 
@@ -289,11 +299,7 @@ def combine_links(mother, daughter):
     return mother[:find_last_slash(mother) + 1] + daughter
 
 
-def pickle_bot(bot, filename='save_bot'):
-    file_to_pickle = open(DATA_PATH + filename + '.p', 'wb')
-    
-    pickle.dump(bot, file_to_pickle)
-    file_to_pickle.close()
+
     
 
 
