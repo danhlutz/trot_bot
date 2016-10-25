@@ -131,8 +131,8 @@ class Bot:
         # cycle thru words
         for word in word_list:
             # if word is int eh short words dict, append the dict value
-            if word in self.short_words:
-                final_word_list.append(self.short_words[word])
+            if word.lower() in self.short_words:
+                final_word_list.append(self.short_words[word.lower()])
             # else just append the word
             else:
                 final_word_list.append(word)
