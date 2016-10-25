@@ -84,8 +84,23 @@ class Bot:
                word_list[i+1][0] in string.uppercase:
                 hashtag = '#' + word + word_list[i+1]
                 if verbose: print 'GOT ONE!: ', hashtag
-
+                # if a double caps word pair is found, replace it in the string
+                # and return it
                 return word_list[:i] + [hashtag,] + word_list[i + 2:]
+        # if we do not find a double-caps pair, look for the longest word
+        # and hashtag it
+        longest = 1
+        # loop thru words and find the position of the longest.
+        # sure there is a more pythonic way to do to this
+        for i, word in enumerate(word_list):
+            if len(word) >= word_list[longest] and i != 0:
+                longest = i
+        # hashtag the word
+        hashtag = '#' + word_list[longest]
+        if verbose: print 'GOT ONE!: ', hashtag
+        return word_list[:longest] + [hashtag,] + word_list[longest + 1:] 
+        # NEXT STEP: hashtag the longest word
+        # ALSO --- needs test!
         return word_list
                 
 
@@ -438,7 +453,25 @@ def test_find_unscraped_link():
     return y.find_unscraped_link() != None
 
 
+def hashtag_tests(verbose=False):
+    x = Bot()
+    double_cap = ['Should', 'trigger', 'a', 'Double', 'Cap']
+    double_cap2 = ['Should', 'Trigger', 'A', 'double', 'cap']
+    long_word = ['How', 'looooooooooooooooooooong', 'does', 'this', 'need']
+    long_word_end = ['long', 'word', 'ennnnnnnnnnnnnnnnnnnnnnnnd']
+    two_longs = ['Two', 'looong', 'shoort']
+    to_test = [
+        double_cap,
+        double_cap2,
+        long_word,
+        long_word_end,
+        two_longs
+        ]
+    results = [x.hashtag_words(test_list, verbose=verbose)
+               for test_list in to_test]
 
+
+# testing harness
 def test_func(func):
     print 'Testing: ', func.__name__, '\t','PASSED: ', func()
     if func():
