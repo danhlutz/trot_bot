@@ -102,7 +102,9 @@ class Bot:
         for i, word in enumerate(word_list):
             # check to see if the word and the next word start
             # with upper letters
-            if i != 0 and word[0] in string.uppercase and \
+            if i + 2 > len(word_list):
+                break
+            elif i != 0 and word[0] in string.uppercase and \
                word_list[i+1][0] in string.uppercase:
                 hashtag = '#' + word + word_list[i+1]
                 if verbose: print 'GOT ONE!: ', hashtag
@@ -132,6 +134,7 @@ class Bot:
         for word in word_list:
             # if word is int eh short words dict, append the dict value
             if word.lower() in self.short_words:
+                if verbose: print 'Got one!: ', self.short_words[word.lower()]
                 final_word_list.append(self.short_words[word.lower()])
             # else just append the word
             else:
@@ -496,12 +499,14 @@ def hashtag_tests(verbose=False):
     long_word = ['How', 'looooooooooooooooooooong', 'does', 'this', 'need']
     long_word_end = ['long', 'word', 'ennnnnnnnnnnnnnnnnnnnnnnnd']
     two_longs = ['Two', 'looong', 'shoort']
+    last_cap = ['Only', 'the', 'last', 'is', 'CAP']
     to_test = [
         double_cap,
         double_cap2,
         long_word,
         long_word_end,
-        two_longs
+        two_longs,
+        last_cap
         ]
     results = [x.hashtag_words(test_list, verbose=verbose)
                for test_list in to_test]
@@ -511,6 +516,16 @@ def hashtag_tests(verbose=False):
            results[3][2] == '#ennnnnnnnnnnnnnnnnnnnnnnnd' and \
            results[4][2] == '#shoort'
 
+def test_shorten_tweet(verbose=False):
+    x = Bot()
+    words = ['This', 'is', 'the', 'Fourth', 'International']
+    words2 = ['And', 'this', 'is', 'for', 'my', 'first', 'friend', 'LENIN']
+    words3 = ['For', 'you', 'and', 'the', 'FIRST', 'International']
+    words4 = ['Any', 'tags', 'here']
+    to_test = [words, words2, words3, words4]
+    results = [x.shorten_tweet(x.hashtag_words(word_list), verbose)
+               for word_list in to_test]
+    
 
 # testing harness
 def test_func(func):
