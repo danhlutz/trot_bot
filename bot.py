@@ -93,9 +93,10 @@ class Bot:
         # loop thru words and find the position of the longest.
         # sure there is a more pythonic way to do to this
         for i, word in enumerate(word_list):
-            if len(word) >= word_list[longest] and i != 0:
+            if len(word) >= len(word_list[longest]) and i != 0:
                 longest = i
         # hashtag the word
+        if verbose: print 'LONGEST:', longest
         hashtag = '#' + word_list[longest]
         if verbose: print 'GOT ONE!: ', hashtag
         return word_list[:longest] + [hashtag,] + word_list[longest + 1:] 
@@ -469,6 +470,7 @@ def hashtag_tests(verbose=False):
         ]
     results = [x.hashtag_words(test_list, verbose=verbose)
                for test_list in to_test]
+    return results
 
 
 # testing harness
