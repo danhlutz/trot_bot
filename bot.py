@@ -525,6 +525,9 @@ def test_shorten_tweet(verbose=False):
     to_test = [words, words2, words3, words4]
     results = [x.shorten_tweet(x.hashtag_words(word_list), verbose)
                for word_list in to_test]
+    return results[1][3] == '4' and \
+           results[2][0] == '4' and \
+           results[2][2] == '&'
     
 
 # testing harness
@@ -560,7 +563,8 @@ def test():
         test_add_index,
         test_crawler_scrape,
         test_find_unscraped_link,
-        hashtag_tests
+        hashtag_tests,
+        test_shorten_tweet
         ]
     # will print individual test results before summing results
     passed = sum([test_func(function) for function in func_list])
