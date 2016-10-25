@@ -31,7 +31,17 @@ class Bot:
             'and': '&',
             'international': 'intl',
             'number': '#',
-            'about': 'abt'
+            'for': '4',
+            'before': 'b4',
+            'because': 'b/c',
+            'forward': 'fwd',
+            '#fourthinternational': random.choice(['#4thIntl', '#Intl4.0']),
+            '#thirdinternational': random.choice(['#3rdIntl', '#Intl3.0']),
+            '#secondinternational': '#2ndIntl',
+            '#firstinternational': '#1stIntl',
+            'lenin': random.choice(['#bigL', '#Lenin']),
+            'marx': random.choice(['#bigM', '#Marx'])
+            
             }
             
 
@@ -115,6 +125,19 @@ class Bot:
         # NEXT STEP: hashtag the longest word
         # ALSO --- needs test!
         return word_list
+
+    def shorten_tweet(self, word_list, verbose=False):
+        final_word_list = []
+        # cycle thru words
+        for word in word_list:
+            # if word is int eh short words dict, append the dict value
+            if word in self.short_words:
+                final_word_list.append(self.short_words[word])
+            # else just append the word
+            else:
+                final_word_list.append(word)
+        return final_word_list
+        #NOW WRITE A TEST FOR THIS 
                 
 
 
