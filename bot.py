@@ -149,7 +149,7 @@ class Bot:
         file_to_pickle.close()
 
 
-    def load_crawler(self, filename='pickled_bot'):
+    def load_bot(self, filename='pickled_bot'):
         file_to_unpickle = open(DATA_PATH + filename + '.p', 'rb')
         self.start_words, self.trigrams = pickle.load(file_to_unpickle)
         file_to_unpickle.close()
