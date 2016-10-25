@@ -145,7 +145,7 @@ class Bot:
     def pickle_bot(self, filename='pickled_bot'):
         file_to_pickle = open(DATA_PATH + filename + '.p', 'wb')
         start_words_and_trigrams = (self.start_words, self.trigrams)
-        pickle.dump(index_and_content, file_to_pickle)
+        pickle.dump(start_words_and_trigrams, file_to_pickle)
         file_to_pickle.close()
 
 
@@ -534,6 +534,32 @@ def test_shorten_tweet(verbose=False):
     return results[1][3] == '4' and \
            results[2][0] == '4' and \
            results[2][2] == '&'
+
+def test_pickler(verbose=False):
+    x = Bot()
+    x.scrape_page('https://www.marxists.org/archive/trotsky/1924/ffyci-1/ch02.htm')
+    x.add_fourgrams()
+    xstart_words1 = len(x.start_words)
+    xtrigrams1 = len(x.trigrams)
+    x.scrape_page('https://www.marxists.org/archive/trotsky/1909/xx/tia09.htm')
+    x.add_fourgrams()
+    xstart_words2 = len(x.start_words)
+    xtrigrams2 = len(x.trigrams)
+    x.pickle_bot(filename='test_bot')
+    y = Bot()
+    y.load_bot(filename='test_bot')
+    ystart_words = len(y.start_words)
+    ytrigrams = len(y.trigrams)
+    if verbose:
+        print 'X Round 1 start_words: ', xstart_words1, ' trigrams: ', xtrigrams1
+        print 'X Round 2 start_words: ', xstart_words2, ' trigrams: ', xtrigrams2
+        print 'Y Round 1 start_words: ', ystart_words, ' trigrams: ', ytrigrams
+    return xstart_words1 < xstart_words2 and \
+           xtrigrams1 < xtrigrams2 and \
+           xtrigrams2 == ytrigrams and \
+           xstart_words2 == ystart_words
+        
+
     
 
 # testing harness
@@ -570,7 +596,8 @@ def test():
         test_crawler_scrape,
         test_find_unscraped_link,
         hashtag_tests,
-        test_shorten_tweet
+        test_shorten_tweet,
+        test_pickler
         ]
     # will print individual test results before summing results
     passed = sum([test_func(function) for function in func_list])
