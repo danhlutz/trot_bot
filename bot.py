@@ -470,7 +470,11 @@ def hashtag_tests(verbose=False):
         ]
     results = [x.hashtag_words(test_list, verbose=verbose)
                for test_list in to_test]
-    return results
+    return results[0][3] == '#DoubleCap' and \
+           results[1][1] == '#TriggerA' and \
+           results[2][1] == '#looooooooooooooooooooong' and \
+           results[3][2] == '#ennnnnnnnnnnnnnnnnnnnnnnnd' and \
+           results[4][2] == '#shoort'
 
 
 # testing harness
@@ -487,6 +491,7 @@ def test():
     print '***************************************************'
     print 'BEGIN TESTING'
     print ''
+    # list of tests to be run
     func_list = [
         test_bot_init,
         test_fix_unicode,
@@ -504,8 +509,10 @@ def test():
         test_combine,
         test_add_index,
         test_crawler_scrape,
-        test_find_unscraped_link
+        test_find_unscraped_link,
+        hashtag_tests
         ]
+    # will print individual test results before summing results
     passed = sum([test_func(function) for function in func_list])
     total = len(func_list)
     print ''
