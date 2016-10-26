@@ -155,7 +155,8 @@ class Bot:
         file_to_unpickle.close()
 
 
-    def accumulate_wisdom(self, num_pages=20, verbose=False, pickle_it=True):
+    def accumulate_wisdom(self, num_pages=20, verbose=False, pickle_it=True, \
+                          prune_it=False):
         # init and load a crawler. Crawler must have already scraped
         # content pages
         crawler = Crawler()
@@ -171,7 +172,7 @@ class Bot:
             if verbose: print 'Start words: ', len(self.start_words), \
                'nGrams: ', len(self.trigrams)               
             
-        print 'Accumulated the historical wisdom of ' + str(num_pages) + \
+        if verbose: print 'Accumulated the historical wisdom of ' + str(num_pages) + \
               ' works of the old man.'
 
         if pickle_it: self.pickle_bot()
@@ -584,6 +585,19 @@ def test_pickler(verbose=False):
            xtrigrams1 < xtrigrams2 and \
            xtrigrams2 == ytrigrams and \
            xstart_words2 == ystart_words
+
+
+def test_accumulate_wisdom_no_prune(verbose=False):
+    x = Bot()
+    x.accumulate_wisdom(num_pages=1, verbose=verbose, pickle_it=False, \
+                        prune_it=False)
+    x1_start_words = len(x.start_words)
+    x1_trigrams = len(x.trigrams)
+    x.accumulate_wisdom(num_pages=1, verbose=verbose, pickle_it=False, \
+                        prune_it=False)
+    x2_start_words = len(x.start_words)
+    x2_trigrams = len(x.trigrams)
+    return x2_start_words >= x1_start_words and x2_trigrams >= x1_trigrams
         
 
     
@@ -623,7 +637,8 @@ def test():
         test_find_unscraped_link,
         hashtag_tests,
         test_shorten_tweet,
-        test_pickler
+        test_pickler,
+        test_accumulate_wisdom_no_prune
         ]
     # will print individual test results before summing results
     passed = sum([test_func(function) for function in func_list])
