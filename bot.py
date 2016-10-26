@@ -155,6 +155,26 @@ class Bot:
         file_to_unpickle.close()
 
 
+    def accumulate_wisdom(self, num_pages=20, verbose=False):
+        # init and load a crawler. Crawler must have already scraped
+        # content pages
+        crawler = Crawler()
+        crawler.load_crawler()
+        # return a list of pages to crawl
+        pages_to_crawl = random.sample(crawler.content, num_pages)
+        # for each page, scrape it, then add it to the trigrams
+        for page in pages_to_crawl:
+            sleep(30)
+            if verbose: print 'Scraping: ', page
+            self.scrape_page(page)
+            self.add_fourgrams()
+            if verbose: print 'Start words: ', len(self.start_words), \
+               'nGrams: ', len(self.trigrams)               
+            
+        print 'Accumulated the historical wisdom of ' + str(num_pages) + \
+              ' works of the old man.'
+
+
 
     ## ADD FUNCTION TO TURN WORD LIST INTO SENTENCE            
 ##                final = " ".join(result)
