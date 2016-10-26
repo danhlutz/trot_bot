@@ -155,17 +155,39 @@ class Bot:
         file_to_unpickle.close()
 
 
-    def accumulate_wisdom(self, num_pages=20, verbose=False, pickle_it=True, \
+    def prune(self, verbose=False):
+        if verbose: print 'START - Start_words: ', len(self.start_words)
+        new_start_words = []
+        for start_word in self.start_words:
+            # create a tuple and add a period to the beginning
+            # since this is how it will appear
+            # in the list of trigrams
+            to_test = ('.', start_word[0], start_word[1])
+            # check the len of to_test in the trigrams dictionary
+            if len(self.trigrams[to_test]) > 1:
+                new_start_words.append(start_word)
+        if len(new_start_words) > 0:
+            self.start_words = new_start_words
+        if verbose: print 'END - Start_words: ', len(self.start_words)
+      
+            
+
+
+    def accumulate_wisdom(self, num_pages=20, verbose=False, pickle_it=False, \
                           prune_it=False):
         # init and load a crawler. Crawler must have already scraped
         # content pages
+        if num_pages < 3:
+            sleeptime = 5
+        else:
+            sleeptime = 30
         crawler = Crawler()
         crawler.load_crawler()
         # return a list of pages to crawl
         pages_to_crawl = random.sample(crawler.content, num_pages)
         # for each page, scrape it, then add it to the trigrams
         for page in pages_to_crawl:
-            sleep(30)
+            sleep(sleeptime)
             if verbose: print 'Scraping: ', page
             self.scrape_page(page)
             self.add_fourgrams()
@@ -598,14 +620,35 @@ def test_accumulate_wisdom_no_prune(verbose=False):
     x2_start_words = len(x.start_words)
     x2_trigrams = len(x.trigrams)
     return x2_start_words >= x1_start_words and x2_trigrams >= x1_trigrams
+
         
+def test_prune(verbose=False):
+    x = Bot()
+    x.accumulate_wisdom(num_pages=1)
+    x1_start_words = len(x.start_words)
+
+    x.prune(verbose=verbose)
+    x2_start_words = len(x.start_words)
+
+    n = 0
+
+    for i in range(100):
+        try:
+            x.generate_words_fourgrams()
+            n += 1
+        except IndexError:
+            if verbose: print 'Index Error!'
+            continue
 
     
+    return x1_start_words >= x2_start_words and \
+           n == 100
 
 # testing harness
 def test_func(func):
-    print 'Testing: ', func.__name__, '\t','PASSED: ', func()
-    if func():
+    result = func()
+    print 'Testing: ', func.__name__, '\t','PASSED: ', result
+    if result:
         return 1
     else:
         return 0
@@ -638,7 +681,8 @@ def test():
         hashtag_tests,
         test_shorten_tweet,
         test_pickler,
-        test_accumulate_wisdom_no_prune
+        test_accumulate_wisdom_no_prune,
+        test_prune
         ]
     # will print individual test results before summing results
     passed = sum([test_func(function) for function in func_list])
