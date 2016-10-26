@@ -94,7 +94,7 @@ class Bot:
             prev, current1, current2 = current1, current2, next_word
             result.append(current2)
             if current2 in ['.', '?', '!']:
-                result.append(current2)
+                
                 return result
 
 
@@ -155,7 +155,7 @@ class Bot:
         file_to_unpickle.close()
 
 
-    def accumulate_wisdom(self, num_pages=20, verbose=False):
+    def accumulate_wisdom(self, num_pages=20, verbose=False, pickle_it=True):
         # init and load a crawler. Crawler must have already scraped
         # content pages
         crawler = Crawler()
@@ -173,6 +173,12 @@ class Bot:
             
         print 'Accumulated the historical wisdom of ' + str(num_pages) + \
               ' works of the old man.'
+
+        if pickle_it: self.pickle_bot()
+
+        # NEEDS MORE WORK
+        # 1. prune start words
+        # 2. pickle bot
 
 
 
