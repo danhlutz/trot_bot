@@ -40,7 +40,9 @@ class Bot:
             '#secondinternational': '#2ndIntl',
             '#firstinternational': '#1stIntl',
             'lenin': random.choice(['#bigL', '#Lenin']),
-            'marx': random.choice(['#bigM', '#Marx'])
+            'marx': random.choice(['#bigM', '#Marx']),
+            'bourgeois': '#boogie',
+            'bourgeoisie': '#TheBoogies'
             
             }
             
