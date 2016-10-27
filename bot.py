@@ -166,7 +166,8 @@ class Bot:
             # in the list of trigrams
             to_test = ('.', start_word[0], start_word[1])
             # check the len of to_test in the trigrams dictionary
-            if len(self.trigrams[to_test]) > 1:
+            if len(self.trigrams[to_test]) > 1 and \
+               (len(to_test[1]) > 1 or to_test[1] == 'A' or to_test[1] == 'I'):
                 new_start_words.append(start_word)
         if len(new_start_words) > 0:
             self.start_words = new_start_words
@@ -704,6 +705,30 @@ def test_draft_tweet(verbose=False):
 
     return sum([len(trotsky.draft_tweet(verbose=verbose)) < 160 \
                 for _ in range(100)]) == 100
+
+def test_new_prune(verbose=False):
+    x = Bot()
+    x.start_words = [('I', 'am'),
+              ('You', 'are'),
+              ('A', 'woman'),
+              ('Stuff', 'stuff'),
+              ('1', 'thing')
+              ]
+    x.trigrams = {('.','I', 'am'): [1, 2, 3],
+              ('.','You', 'are'): [1, 2],
+              ('.','A', 'woman'): [1, 2, 3],
+              ('.','Stuff', 'stuff'): [1],
+              ('.','1', 'thing'): [1]
+              }
+    x.prune(verbose=verbose)
+    if verbose:
+        for item in x.start_words:
+            print item
+    return ('I', 'am') in x.start_words and \
+           ('You', 'are') in x.start_words and \
+           ('A', 'woman') in x.start_words and \
+           ('Stuff', 'stuff') not in x.start_words and \
+           ('1', 'thing') not in x.start_words
                     
 
 
@@ -749,7 +774,8 @@ def test():
         test_accumulate_wisdom_and_prune,
         test_join_words,
         test_join_words_live,
-        test_draft_tweet
+        test_draft_tweet,
+        test_new_prune
         ]
     # will print individual test results before summing results
     passed = sum([test_func(function) for function in func_list])
