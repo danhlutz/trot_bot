@@ -197,15 +197,11 @@ class Bot:
         if prune_it: self.prune()
         if pickle_it: self.pickle_bot()
 
-        # NEEDS MORE WORK
-        # 1. prune start words
-        # 2. pickle bot
+
+    def join_words(self, word_list):
+        return str(" ".join(word_list))
 
 
-
-    ## ADD FUNCTION TO TURN WORD LIST INTO SENTENCE            
-##                final = " ".join(result)
-##                return final[:-2] + current2
 
     
     
@@ -650,6 +646,40 @@ def test_accumulate_wisdom_and_prune(verbose=False):
     x2_start_words = len(x.start_words)
     return x2_start_words > 0 and x1_start_words > 0
 
+def test_join_words(verbose=False):
+    x = Bot()
+    words = [u'A', u'word', u'list', u'!']
+    words2 = ['#MoreWords!', 'are', '#finally', 'here!']
+    words3 = [u'Unicode', 'and', 'ascii', u'working', u'together']
+    words4 = [u"let's", u"see", u"if", u"Dan's", "work's(sic)"]
+    word_lists = [
+        words,
+        words2,
+        words3,
+        words4
+        ]
+    results = []
+    for word_list in word_lists:
+        results.append(x.join_words(word_list))
+        if verbose:
+            print results[-1]
+            print 'Type: ', type(results[-1])
+    return sum([type(result) == str for result in results]) == len(word_lists)
+
+
+def test_join_words_live():
+    trotsky = Bot()
+    url = 'https://www.marxists.org/archive/trotsky/1930/hrr/ch42.htm'
+    trotsky.scrape_page(url)
+    trotsky.add_fourgrams()
+
+    n = 0
+
+    for i in range(100):
+        word_list = trotsky.generate_words_fourgrams()
+        if type(trotsky.join_words(word_list)) == str:
+            n += 1
+    return n == 100
 
 
 # testing harness
@@ -691,7 +721,9 @@ def test():
         test_pickler,
         test_accumulate_wisdom_no_prune,
         test_prune,
-        test_accumulate_wisdom_and_prune
+        test_accumulate_wisdom_and_prune,
+        test_join_words,
+        test_join_words_live
         ]
     # will print individual test results before summing results
     passed = sum([test_func(function) for function in func_list])
