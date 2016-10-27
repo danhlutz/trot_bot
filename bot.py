@@ -171,8 +171,6 @@ class Bot:
         if verbose: print 'END - Start_words: ', len(self.start_words)
       
             
-
-
     def accumulate_wisdom(self, num_pages=20, verbose=False, pickle_it=False, \
                           prune_it=False):
         # init and load a crawler. Crawler must have already scraped
@@ -196,7 +194,7 @@ class Bot:
             
         if verbose: print 'Accumulated the historical wisdom of ' + str(num_pages) + \
               ' works of the old man.'
-
+        if prune_it: self.prune()
         if pickle_it: self.pickle_bot()
 
         # NEEDS MORE WORK
@@ -639,10 +637,20 @@ def test_prune(verbose=False):
         except IndexError:
             if verbose: print 'Index Error!'
             continue
-
-    
     return x1_start_words >= x2_start_words and \
            n == 100
+
+def test_accumulate_wisdom_and_prune(verbose=False):
+    x = Bot()
+    x.accumulate_wisdom(num_pages=2, verbose=verbose, pickle_it=False, \
+                        prune_it=False)
+    x1_start_words = len(x.start_words)
+    x.accumulate_wisdom(num_pages=2, verbose=verbose, pickle_it=False, \
+                        prune_it=True)
+    x2_start_words = len(x.start_words)
+    return x2_start_words > 0 and x1_start_words > 0
+
+
 
 # testing harness
 def test_func(func):
@@ -682,7 +690,8 @@ def test():
         test_shorten_tweet,
         test_pickler,
         test_accumulate_wisdom_no_prune,
-        test_prune
+        test_prune,
+        test_accumulate_wisdom_and_prune
         ]
     # will print individual test results before summing results
     passed = sum([test_func(function) for function in func_list])
