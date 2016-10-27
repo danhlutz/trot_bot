@@ -11,6 +11,7 @@ import string
 
 from bs4 import BeautifulSoup
 import requests
+from twython import Twython
 
 
 
@@ -214,6 +215,14 @@ class Bot:
             if verbose: print tweet
             if len(tweet) < 141:
                 return tweet
+
+
+    def send_tweet(self, verbose=False):
+        tweet = self.draft_tweet(verbose=verbose)
+        twitter = Twython(APP_KEY, APP_SECRET, \
+                  OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
+        
+        twitter.update_status(status=tweet)
         
 
 
@@ -358,7 +367,7 @@ def combine_links(mother, daughter):
 
 
 
-    
+
 
 
 
