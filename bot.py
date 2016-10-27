@@ -201,7 +201,7 @@ class Bot:
 
 
     def join_words(self, word_list):
-        return str(" ".join(word_list))
+        return str(" ".join(word_list[:-1]))
 
 
     def draft_tweet(self, verbose=False):
@@ -211,7 +211,7 @@ class Bot:
             tweet = self.shorten_tweet(tweet)
             tweet = self.join_words(tweet)
             if verbose: print tweet
-            if len(tweet) < 160:
+            if len(tweet) < 141:
                 return tweet
         
 
