@@ -202,6 +202,18 @@ class Bot:
         return str(" ".join(word_list))
 
 
+    def draft_tweet(self, verbose=False):
+        while True:
+            tweet = self.generate_words_fourgrams()
+            tweet = self.hashtag_words(tweet)
+            tweet = self.shorten_tweet(tweet)
+            tweet = self.join_words(tweet)
+            if verbose: print tweet
+            if len(tweet) < 160:
+                return tweet
+        
+
+
 
     
     
@@ -682,6 +694,17 @@ def test_join_words_live():
     return n == 100
 
 
+def test_draft_tweet(verbose=False):
+    trotsky = Bot()
+    url = 'https://www.marxists.org/archive/trotsky/1930/hrr/ch43.htm'
+    trotsky.scrape_page(url)
+    trotsky.add_fourgrams()
+
+    return sum([len(trotsky.draft_tweet(verbose=verbose)) < 160 \
+                for _ in range(100)]) == 100
+                    
+
+
 # testing harness
 def test_func(func):
     result = func()
@@ -723,7 +746,8 @@ def test():
         test_prune,
         test_accumulate_wisdom_and_prune,
         test_join_words,
-        test_join_words_live
+        test_join_words_live,
+        test_draft_tweet
         ]
     # will print individual test results before summing results
     passed = sum([test_func(function) for function in func_list])
