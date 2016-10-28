@@ -188,9 +188,9 @@ class Bot:
         # return a list of pages to crawl
         pages_to_crawl = random.sample(crawler.content, num_pages)
         # for each page, scrape it, then add it to the trigrams
-        for page in pages_to_crawl:
+        for i, page in enumerate(pages_to_crawl):
             sleep(sleeptime)
-            if verbose: print 'Scraping: ', page
+            if verbose: print 'Page # ', i, 'Scraping: ', page
             self.scrape_page(page)
             self.add_fourgrams()
             if verbose: print 'Start words: ', len(self.start_words), \
