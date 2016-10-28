@@ -2,7 +2,7 @@ I'm learning Python in my spare time and I started this project to help me get
 stronger -- and to show my love of the Old Man. 
 
 ## Acknowledgments
-I modified the n-grams method in Joel Grus's Data Science from Scratch to 
+I modified the n-grams method in Joel Grus's _Data Science from Scratch_ to 
 randomly generate the Trotsky quotes. Instead of trigrams, I used 4-grams, and
 so actual quotes turn up more often. 
 
@@ -17,6 +17,7 @@ Trotsky. We have a long way to go.
 ## Getting started
 
 I am going to add a setup function and function to tweet every hour. Until then here is how to set up a bot.
+
 1. instantiate a Crawler, then run crawler.crawl() to scrape the TIA for links to content pages
 2. pickle the crawler using the .pickle_crawler method
 3. Instantiate a bot and then run the accumulate_wisdom method to load pages from the TIA into the pages. 
