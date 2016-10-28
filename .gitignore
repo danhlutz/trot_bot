@@ -5,3 +5,4 @@ settings.py
 settings.pyc
 data/*
 .DS_Store
+bot.pyc
