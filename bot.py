@@ -1,6 +1,4 @@
 #trot_bot
-# but Mark should really up his game and learn git
-# mark is really great
 
 import random, re
 from collections import defaultdict
@@ -223,26 +221,7 @@ class Bot:
                   OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
         
         twitter.update_status(status=tweet)
-        
 
-
-
-    
-    
-            
-
-    # add tweetify functions
-
-    # add hashtagger
-
-    # add word shortener
-
-
-    # and tweet generator. Steps:
-    # generate random word
-    # hashtag it
-    # shorten words
-    # if < 160 characters, return it 
 
 
 class Crawler():
@@ -309,18 +288,6 @@ class Crawler():
             sleep(10)
         self.pickle_crawler()
             
-        
-        
-    
-
-    
-
-    # helper functions needed
-    # return true or false if it is a page in the TIA
-    # return true or false if it is an index page -- need to get links
-    # return true or fale if it is a page to be scraped
-        
-
 
 # HELPER FUNCTIONS
 
@@ -368,23 +335,6 @@ def combine_links(mother, daughter):
 
 
 
-
-
-
-
-
-
-
-
-
-#LATER STUFF
-
-# scrape the whole TIA
-# first scrape for links. Build up a list of link
-
-# pull a sample of k links, scrape all of them
-
-# tweet
 
 
 ## TESTS
