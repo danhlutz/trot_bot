@@ -11,6 +11,15 @@ from bs4 import BeautifulSoup
 import requests
 from twython import Twython
 
+DATA_PATH = ''
+
+APP_KEY = os.environ[APP_KEY]
+
+APP_SECRET = os.environ[APP_SECRET]
+
+OAUTH_TOKEN = os.environ[OAUTH_TOKEN]
+
+OAUTH_TOKEN_SECRET = os.environ[OAUTH_TOKEN_SECRET]
 
 
 class Bot:
@@ -151,7 +160,7 @@ class Bot:
 
 
     def load_bot(self, filename='pickled_bot'):
-        file_to_unpickle = open(os.environ(DATA_PATH) + filename + '.p', 'rb')
+        file_to_unpickle = open(filename + '.p', 'rb')
         self.start_words, self.trigrams = pickle.load(file_to_unpickle)
         file_to_unpickle.close()
 
