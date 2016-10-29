@@ -13,13 +13,13 @@ from twython import Twython
 
 DATA_PATH = ''
 
-APP_KEY = os.environ[APP_KEY]
+APP_KEY = os.environ['APP_KEY']
 
-APP_SECRET = os.environ[APP_SECRET]
+APP_SECRET = os.environ['APP_SECRET']
 
-OAUTH_TOKEN = os.environ[OAUTH_TOKEN]
+OAUTH_TOKEN = os.environ['OAUTH_TOKEN']
 
-OAUTH_TOKEN_SECRET = os.environ[OAUTH_TOKEN_SECRET]
+OAUTH_TOKEN_SECRET = os.environ['OAUTH_TOKEN_SECRET']
 
 
 class Bot:
