@@ -1,6 +1,6 @@
 #trot_bot
 
-import random, re
+import random, re, os
 from collections import defaultdict
 import cPickle as pickle
 #from settings import *
@@ -151,7 +151,7 @@ class Bot:
 
 
     def load_bot(self, filename='pickled_bot'):
-        file_to_unpickle = open(DATA_PATH + filename + '.p', 'rb')
+        file_to_unpickle = open(os.environ(DATA_PATH) + filename + '.p', 'rb')
         self.start_words, self.trigrams = pickle.load(file_to_unpickle)
         file_to_unpickle.close()
 
