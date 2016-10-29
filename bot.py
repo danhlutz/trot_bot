@@ -3,7 +3,7 @@
 import random, re
 from collections import defaultdict
 import cPickle as pickle
-from settings import *
+#from settings import *
 from time import sleep
 import string
 
