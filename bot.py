@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 import requests
 from twython import Twython
 
-DATA_PATH = ''
+DATA_PATH = os.environ['DATA_PATH']
 
 APP_KEY = os.environ['APP_KEY']
 
@@ -153,7 +153,7 @@ class Bot:
         #NOW WRITE A TEST FOR THIS 
                 
     def pickle_bot(self, filename='pickled_bot'):
-        file_to_pickle = open(DATA_PATH + filename + '.p', 'wb')
+        file_to_pickle = open(filename + '.p', 'wb')
         start_words_and_trigrams = (self.start_words, self.trigrams)
         pickle.dump(start_words_and_trigrams, file_to_pickle)
         file_to_pickle.close()
