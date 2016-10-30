@@ -6,3 +6,4 @@ settings.pyc
 data/*
 .DS_Store
 bot.pyc
+test_bot.p
