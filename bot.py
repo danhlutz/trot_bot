@@ -241,8 +241,11 @@ class Bot:
                 return tweet
 
 
-    def send_tweet(self, verbose=False):
-        tweet = self.draft_tweet(verbose=verbose)
+    def send_tweet(self, verbose=False, override=None):
+        if override != None:
+            tweet = override
+        else:
+            tweet = self.draft_tweet(verbose=verbose)
         twitter = Twython(APP_KEY, APP_SECRET, \
                   OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
         
