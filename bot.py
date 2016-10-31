@@ -272,6 +272,7 @@ class Bot:
             ('AFAIK ', 'start'), \
             #crying face
             (u'\U0001F602', 'end'), \
+            (u'\U0001F602\U0001F602\U0001F602\U0001F602', 'end'), \
             (u'\U0001F62D', 'end'), \
             (u'\U0001F61C', 'end'), \
             #angry face
@@ -281,7 +282,8 @@ class Bot:
             #raising hand
             (u'\U0001F64B ', 'start'), \
             #thinking face
-            (u'\U0001F914 ', 'start')
+            (u'\U0001F914 ', 'start'), \
+            (u'\U0001F914\U0001F914\U0001F914', 'end')
             ]
         
         while True:
