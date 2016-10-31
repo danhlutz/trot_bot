@@ -227,7 +227,7 @@ class Bot:
 
 
     def join_words(self, word_list):
-        return str(" ".join(word_list[:-1]))
+        return unicode(" ".join(word_list[:-1]))
 
 
     def draft_tweet(self, verbose=False):
@@ -241,6 +241,16 @@ class Bot:
                 return tweet
 
 
+    def add_hand_claps(self, tweet):
+        new_tweet = u''
+        for char in tweet:
+            if char == u' ': next_char = u'\U0001F44F'
+            else: next_char = char
+            new_tweet += next_char
+        return new_tweet
+        
+    
+    
     def send_tweet(self, verbose=False, override=None):
         if override != None:
             tweet = override
@@ -667,7 +677,7 @@ def test_join_words(verbose=False):
         if verbose:
             print results[-1]
             print 'Type: ', type(results[-1])
-    return sum([type(result) == str for result in results]) == len(word_lists)
+    return sum([type(result) == unicode for result in results]) == len(word_lists)
 
 
 def test_join_words_live():
@@ -680,7 +690,7 @@ def test_join_words_live():
 
     for i in range(100):
         word_list = trotsky.generate_words_fourgrams()
-        if type(trotsky.join_words(word_list)) == str:
+        if type(trotsky.join_words(word_list)) == unicode:
             n += 1
     return n == 100
 
