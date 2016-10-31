@@ -53,6 +53,22 @@ class Bot:
             'bourgeoisie': '#TheBoogies'
             
             }
+        self.bad_starts = [
+            '12',
+            'org',
+            'Transcription',
+            'Permission',
+            'marxists',
+            'org',
+            'Copyleft',
+            'Source',
+            '11',
+            '10',
+            'xiv',
+            '13',
+            'part',
+            'Trans',
+            ]
             
 
     def scrape_page(self, url):
@@ -175,7 +191,8 @@ class Bot:
             to_test = ('.', start_word[0], start_word[1])
             # check the len of to_test in the trigrams dictionary
             if len(self.trigrams[to_test]) > 1 and \
-               (len(to_test[1]) > 1 or to_test[1] == 'A' or to_test[1] == 'I'):
+               (len(to_test[1]) > 1 or to_test[1] == 'A' or to_test[1] == 'I') \
+               and start_word[0] not in self.bad_starts:
                 new_start_words.append(start_word)
         if len(new_start_words) > 0:
             self.start_words = new_start_words
@@ -697,6 +714,36 @@ def test_new_prune(verbose=False):
            ('A', 'woman') in x.start_words and \
            ('Stuff', 'stuff') not in x.start_words and \
            ('1', 'thing') not in x.start_words
+
+
+def test_even_newer_prune(verbose=False):
+    x = Bot()
+    x.start_words = [('I', 'am'),
+              ('org', 'are'),
+              ('marxists', 'woman'),
+              ('13', 'stuff'),
+              ('LENIN', 'thing'),
+              ('Marxist', 'people'),
+              ('My', 'friends')
+              ]
+    x.trigrams = {('.','I', 'am'): [1, 2, 3],
+              ('.','org', 'are'): [1, 2],
+              ('.','marxists', 'woman'): [1, 2, 3],
+              ('.','13', 'stuff'): [1],
+              ('.','LENIN', 'thing'): [1, 2],
+              ('.', 'Marxist', 'people'): [1, 2, 3],
+              ('.', 'My', 'friends'): [1] 
+              }
+    x.prune(verbose=verbose)
+    if verbose:
+        for item in x.start_words:
+            print item
+    return ('I', 'am') in x.start_words and \
+           ('org', 'are') not in x.start_words and \
+           ('marxists', 'woman') not in x.start_words and \
+           ('13', 'stuff') not in x.start_words and \
+           ('LENIN', 'thing') in x.start_words and \
+           ('Marxist', 'people') in x.start_words
                     
 
 
@@ -743,7 +790,8 @@ def test():
         test_join_words,
         test_join_words_live,
         test_draft_tweet,
-        test_new_prune
+        test_new_prune,
+        test_even_newer_prune
         ]
     # will print individual test results before summing results
     passed = sum([test_func(function) for function in func_list])
