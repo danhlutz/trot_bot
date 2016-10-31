@@ -238,6 +238,7 @@ class Bot:
             tweet = self.join_words(tweet)
             if verbose: print tweet
             if len(tweet) < 141:
+                tweet = self.make_it_snotty(tweet)
                 return tweet
 
 
@@ -248,7 +249,51 @@ class Bot:
             else: next_char = char
             new_tweet += next_char
         return new_tweet
+
+
+    def make_it_snotty(self, tweet):
+        # first add hand claps if tweet is exaclty 140 chars long
+        # or randomly about twice every 24 hours
+        if len(tweet) >= 139 or random.random() < 0.08333:
+            return self.add_hand_claps(tweet)
+        # make a list of add-ons as tuples.
+        # second element in tuple is where to place it in the tweet
+        add_ons = [
+            ('ICYMI: ', 'start'), \
+            ('TL;DR: ', 'start'), \
+            (' WOKE AF', 'end'), \
+            ('. Sad!', 'end'), \
+            ('OMG! ', 'start'), \
+            ('BTW ', 'start'), \
+            (' FML', 'end'), \
+            ('IMHO ', 'start'), \
+            (' YMMV', 'end'), \
+            ('FTW - ', 'start'), \
+            ('AFAIK ', 'start'), \
+            #crying face
+            (u'\U0001F602', 'end'), \
+            (u'\U0001F62D', 'end'), \
+            (u'\U0001F61C', 'end'), \
+            #angry face
+            (u'\U0001F621', 'end'), \
+            # screaming
+            (u'\U0001F631', 'end'), \
+            #raising hand
+            (u'\U0001F64B ', 'start'), \
+            #thinking face
+            (u'\U0001F914 ', 'start')
+            ]
         
+        while True:
+            addition, position = random.choice(add_ons)
+            if position == 'end':
+                new_tweet = tweet + addition
+            else:
+                new_tweet = addition + tweet
+            if len(new_tweet) < 141:
+                return new_tweet
+            
+            
     
     
     def send_tweet(self, verbose=False, override=None):
