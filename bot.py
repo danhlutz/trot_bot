@@ -278,37 +278,66 @@ class Bot:
     def make_it_snotty(self, tweet):
         # first add hand claps if tweet is exaclty 140 chars long
         # or randomly about twice every 24 hours
-        if len(tweet) >= 139 or random.random() < 0.08333:
+        if len(tweet) >= 137 or random.random() < 0.08333:
             return self.add_hand_claps(tweet)
         # make a list of add-ons as tuples.
         # second element in tuple is where to place it in the tweet
-        add_ons = [
-            #('ICYMI: ', 'start'), \
-            #('TL;DR: ', 'start'), \
-            #(' WOKE AF', 'end'), \
-            #('. Sad!', 'end'), \
-            #('OMG! ', 'start'), \
-            #('BTW ', 'start'), \
-            #(' FML', 'end'), \
-            #('IMHO ', 'start'), \
-            #(' YMMV', 'end'), \
-            #('FTW - ', 'start'), \
-            #('AFAIK ', 'start'), \
-            #crying face
-            (u'\U0001F602', 'end'), \
-            (u'\U0001F602\U0001F602\U0001F602\U0001F602', 'end'), \
-            (u'\U0001F62D', 'end'), \
-            (u'\U0001F61C', 'end'), \
-            #angry face
-            (u'\U0001F621', 'end'), \
-            # screaming
-            (u'\U0001F631', 'end'), \
-            #raising hand
-            (u'\U0001F64B ', 'start'), \
-            #thinking face
-            (u'\U0001F914 ', 'start'), \
-            (u'\U0001F914\U0001F914\U0001F914', 'end')
-            ]
+        if random.random() < 0.6:
+            add_ons = [
+                #('ICYMI: ', 'start'), \
+                #('TL;DR: ', 'start'), \
+                #(' WOKE AF', 'end'), \
+                #('. Sad!', 'end'), \
+                #('OMG! ', 'start'), \
+                #('BTW ', 'start'), \
+                #(' FML', 'end'), \
+                #('IMHO ', 'start'), \
+                #(' YMMV', 'end'), \
+                #('FTW - ', 'start'), \
+                #('AFAIK ', 'start'), \
+                #crying face
+                (u'\U0001F602', 'end'), \
+                (u'\U0001F602\U0001F602\U0001F602\U0001F602', 'end'), \
+                (u'\U0001F62D', 'end'), \
+                (u'\U0001F61C', 'end'), \
+                #angry face
+                (u'\U0001F621', 'end'), \
+                # screaming
+                (u'\U0001F631', 'end'), \
+                #raising hand
+                (u'\U0001F64B ', 'start'), \
+                #thinking face
+                (u'\U0001F914 ', 'start'), \
+                (u'\U0001F914\U0001F914\U0001F914', 'end')
+                ]
+        else:
+            add_ons = [
+                ('ICYMI: ', 'start'), \
+                ('TL;DR: ', 'start'), \
+                (' WOKE AF', 'end'), \
+                ('. Sad!', 'end'), \
+                ('OMG! ', 'start'), \
+                ('BTW ', 'start'), \
+                (' FML', 'end'), \
+                ('IMHO ', 'start'), \
+                #(' YMMV', 'end'), \
+                ('FTW - ', 'start'), \
+                ('!', 'end'), \
+                #crying face
+                (u'\U0001F602', 'end'), \
+                (u'\U0001F602\U0001F602\U0001F602\U0001F602', 'end'), \
+                (u'\U0001F62D', 'end'), \
+                (u'\U0001F61C', 'end'), \
+                #angry face
+                (u'\U0001F621', 'end'), \
+                # screaming
+                (u'\U0001F631', 'end'), \
+                #raising hand
+                (u'\U0001F64B ', 'start'), \
+                #thinking face
+                (u'\U0001F914 ', 'start'), \
+                (u'\U0001F914\U0001F914\U0001F914', 'end')
+                ]
         
         while True:
             # repeat until you get something less than 141 chars
