@@ -285,14 +285,14 @@ class Bot:
         add_ons = [
             #('ICYMI: ', 'start'), \
             #('TL;DR: ', 'start'), \
-            (' WOKE AF', 'end'), \
-            ('. Sad!', 'end'), \
-            ('OMG! ', 'start'), \
+            #(' WOKE AF', 'end'), \
+            #('. Sad!', 'end'), \
+            #('OMG! ', 'start'), \
             #('BTW ', 'start'), \
-            (' FML', 'end'), \
+            #(' FML', 'end'), \
             #('IMHO ', 'start'), \
             #(' YMMV', 'end'), \
-            ('FTW - ', 'start'), \
+            #('FTW - ', 'start'), \
             #('AFAIK ', 'start'), \
             #crying face
             (u'\U0001F602', 'end'), \
