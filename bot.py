@@ -53,6 +53,8 @@ class Bot:
             'bourgeoisie': '#TheBoogies'
             
             }
+        # a list of words to prune from the Bot. Words frequently used in
+        # Trotsky Internet Archive markup
         self.bad_starts = [
             '12',
             'org',
@@ -89,6 +91,9 @@ class Bot:
             self.wkg_document.extend(words)
  
     def add_fourgrams(self, verbose=False):
+        # zip four versions of the document together, and make a dict
+        # called _self.trigrams_ to store the word that follows three previous
+        # words in a list
         new_fourgrams = zip(self.wkg_document, \
                        self.wkg_document[1:], \
                        self.wkg_document[2:], \
@@ -100,6 +105,8 @@ class Bot:
             self.trigrams[(prev, current1, current2)].append(next_word)
 
     def generate_words_fourgrams(self, verbose=False):
+        # generate a sentence by randomly picking the next word
+        # from the trigrams dict
         current1, current2 = random.choice(self.start_words)
         prev = '.'
         result = [current1, current2]
@@ -166,9 +173,11 @@ class Bot:
             else:
                 final_word_list.append(word)
         return final_word_list
-        #NOW WRITE A TEST FOR THIS 
-                
+
+
+                        
     def pickle_bot(self, filename='pickled_bot'):
+        # store the bot's start_words and trigrams in a .p pickle data file
         file_to_pickle = open(filename + '.p', 'wb')
         start_words_and_trigrams = (self.start_words, self.trigrams)
         pickle.dump(start_words_and_trigrams, file_to_pickle)
@@ -176,12 +185,15 @@ class Bot:
 
 
     def load_bot(self, filename='pickled_bot'):
+        # load a .p pickled bot
         file_to_unpickle = open(filename + '.p', 'rb')
         self.start_words, self.trigrams = pickle.load(file_to_unpickle)
         file_to_unpickle.close()
 
 
     def prune(self, verbose=False):
+        # remove start words that have only one possible followup
+        # or that appear in Trotsky Internet Archive markup
         if verbose: print 'START - Start_words: ', len(self.start_words)
         new_start_words = []
         for start_word in self.start_words:
@@ -201,6 +213,8 @@ class Bot:
             
     def accumulate_wisdom(self, num_pages=20, verbose=False, pickle_it=False, \
                           prune_it=False):
+        # scrapes thru Trotsky Internet Archive pages to build up
+        # self.start_words and self.trigrams
         # init and load a crawler. Crawler must have already scraped
         # content pages
         if num_pages < 3:
@@ -227,22 +241,31 @@ class Bot:
 
 
     def join_words(self, word_list):
+        # joins the words in a list into a unicode string
         return unicode(" ".join(word_list[:-1]))
 
 
     def draft_tweet(self, verbose=False):
+        # drafts and returns a tweet
         while True:
+            # generate a random word list
             tweet = self.generate_words_fourgrams()
+            # add hashtags
             tweet = self.hashtag_words(tweet)
+            # replace long words with short words
             tweet = self.shorten_tweet(tweet)
+            # join words into a string
             tweet = self.join_words(tweet)
             if verbose: print tweet
+            # keep repeating until you get something shorter than 141 chars
             if len(tweet) < 141:
+                # twitterify it 
                 tweet = self.make_it_snotty(tweet)
                 return tweet
 
 
     def add_hand_claps(self, tweet):
+        # add HAND CLAPS!
         new_tweet = u''
         for char in tweet:
             if char == u' ': next_char = u'\U0001F44F'
@@ -287,6 +310,7 @@ class Bot:
             ]
         
         while True:
+            # repeat until you get something less than 141 chars
             addition, position = random.choice(add_ons)
             if position == 'end':
                 new_tweet = tweet + addition
@@ -300,6 +324,7 @@ class Bot:
     
     def send_tweet(self, verbose=False, override=None):
         if override != None:
+            # override allows you to send any tweet, for testing purposes
             tweet = override
         else:
             tweet = self.draft_tweet(verbose=verbose)
@@ -311,20 +336,28 @@ class Bot:
 
 
 class Crawler():
+    # a crawler crawls the TIA to build up a list of content pages
+    # to be used by the Bot to scrape for trigrams
 
     def __init__(self, seed='https://www.marxists.org/archive/trotsky/works/index.htm'):
+        # list of content pages that will be used by the Bot
         self.content = set()
+        # the list of index pages that contain links to content pages
         self.indexes = {}
+        # add the first index page to the list of indexes
         self.add_index(seed)
 
     def add_index(self, url):
         if url in self.indexes:
             pass
         else:
+            # set the value of the index to False. Will be reset to True
+            # once the index has been visited
             self.indexes[url] = False
 
 
     def scrape_page(self, mother_url, verbose=False):
+        # scrapes an index pages and adds to both the index and content objects
         html = requests.get(mother_url).text
         soup = BeautifulSoup(html, 'html5lib')
         for link in soup.find_all('a'):
@@ -341,6 +374,8 @@ class Crawler():
                 self.add_index(full_link)
 
     def pickle_crawler(self, filename='pickle_crawler'):
+        # pickles a crawler
+        # used when building a bot
         file_to_pickle = open(DATA_PATH + filename + '.p', 'wb')
         index_and_content = (self.indexes, self.content)
         pickle.dump(index_and_content, file_to_pickle)
@@ -348,18 +383,22 @@ class Crawler():
 
 
     def load_crawler(self, filename='pickle_crawler'):
+        # loads a crawler
         file_to_unpickle = open(DATA_PATH + filename + '.p', 'rb')
         self.indexes, self.content = pickle.load(file_to_unpickle)
         file_to_unpickle.close()
 
 
     def find_unscraped_link(self):
+        # goes thru dict of indexes to find one that has not been crawled yet
         for key, value in self.indexes.items():
             if value == False:
                 return key
         return None
 
     def crawl(self):
+        # crawls thru the index dict, iteratively adding to the index dict
+        # and building up the set of content pages
         n = 0
         while sum([value for value in self.indexes.values()]) < \
               len(self.indexes):
@@ -378,10 +417,13 @@ class Crawler():
 # HELPER FUNCTIONS
 
 def fix_unicode(text):
+    # replaces a unicode apostrophe with ASCII apostropher
     return text.replace(u"\u2019", "'")
 
 
 def is_archive(url):
+    # verifies if links belong to the Trotsky Internet Archive
+    # or point to outside websites or higher level sites
     # first three letters are two dots and a slash
     return (url[-3:] == 'htm' or url[-4:] == 'html') and \
            ((url[:3] == '../' and url[3:5] != '..') or \
@@ -389,6 +431,7 @@ def is_archive(url):
 
 
 def classify_link(url):
+    # classifies a link as either an index or content page
     if is_archive(url) == False:
         return None
     if url[-9:] == 'index.htm' or url[-10:] == 'index.html':
@@ -398,6 +441,7 @@ def classify_link(url):
 
 
 def find_next_to_last_slash(url):
+    # used to join shortened urls
     slash = 0
     for i, char in enumerate(url):
         if char == '/':
@@ -407,6 +451,7 @@ def find_next_to_last_slash(url):
 
 
 def find_last_slash(url):
+    # used to join shortened urls
     for i, char in enumerate(url):
         if char == '/':
             slash = i
@@ -414,6 +459,7 @@ def find_last_slash(url):
 
 
 def combine_links(mother, daughter):
+    # build full urls from shortened urls used on the TIA page
     if daughter[:2] == '..':
         return mother[:find_next_to_last_slash(mother)] + daughter[2:]
     return mother[:find_last_slash(mother) + 1] + daughter
