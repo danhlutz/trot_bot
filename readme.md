@@ -25,7 +25,18 @@ Trotsky. We have a long way to go.
 The current bot includes a pickled data file that the bot uses to generate random tweets. You can use that out of the box, or follow the instructions below to roll your own:
 
 1. Create a Crawler, then run crawler.crawl() to scrape the TIA for links to content pages
+'''crawler = Crawler()
+crawler.crawl()'''
+
 2. Pickle the crawler using the .pickle_crawler method
+'''crawler.pickle_crawler()'''
+
 3. Instantiate a bot and then run the accumulate_wisdom method to load pages from the TIA into the pages. 
+
+'''trotsky = Bot()
+trotsky.accumulate_wisdom(num_pages=200, verbose=True, pickle_it=True, prune_it=True)'''
+
 4. use the send_tweet method to generate random tweets and send 'em
+'''trotsky.send_tweet()'''
+
 5. or use the send_tweet.py file to send a tweet from the CL or to schedule a tweet from a server 
