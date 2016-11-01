@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup
 import requests
 from twython import Twython
 
+# set your environment variables people!
 DATA_PATH = os.environ['DATA_PATH']
 
 APP_KEY = os.environ['APP_KEY']
