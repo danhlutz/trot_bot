@@ -26,20 +26,28 @@ The current bot includes a pickled data file that the bot uses to generate rando
 
 Create a Crawler, then run crawler.crawl() to scrape the TIA for links to content pages
 
-```crawler = Crawler()
-crawler.crawl()```
+```python
+crawler = Crawler()
+crawler.crawl()
+```
 
 Pickle the crawler using the .pickle_crawler method
 
-```crawler.pickle_crawler()```
+```python
+crawler.pickle_crawler()
+```
 
 Instantiate a bot and then run the accumulate_wisdom method to load pages from the TIA into the pages. 
 
-```trotsky = Bot()
-trotsky.accumulate_wisdom(num_pages=200, verbose=True, pickle_it=True, prune_it=True)```
+```python
+trotsky = Bot()
+trotsky.accumulate_wisdom(num_pages=200, verbose=True, pickle_it=True, prune_it=True)
+```
 
 Use the send_tweet method to generate random tweets and send 'em
 
-```trotsky.send_tweet()```
+```python
+trotsky.send_tweet()
+```
 
 Or use the send_tweet.py file to send a tweet from the CL or to schedule a tweet from a server 
