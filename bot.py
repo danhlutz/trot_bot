@@ -283,17 +283,17 @@ class Bot:
         # make a list of add-ons as tuples.
         # second element in tuple is where to place it in the tweet
         add_ons = [
-            ('ICYMI: ', 'start'), \
-            ('TL;DR: ', 'start'), \
+            #('ICYMI: ', 'start'), \
+            #('TL;DR: ', 'start'), \
             (' WOKE AF', 'end'), \
             ('. Sad!', 'end'), \
             ('OMG! ', 'start'), \
-            ('BTW ', 'start'), \
+            #('BTW ', 'start'), \
             (' FML', 'end'), \
-            ('IMHO ', 'start'), \
-            (' YMMV', 'end'), \
+            #('IMHO ', 'start'), \
+            #(' YMMV', 'end'), \
             ('FTW - ', 'start'), \
-            ('AFAIK ', 'start'), \
+            #('AFAIK ', 'start'), \
             #crying face
             (u'\U0001F602', 'end'), \
             (u'\U0001F602\U0001F602\U0001F602\U0001F602', 'end'), \
