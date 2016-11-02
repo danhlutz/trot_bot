@@ -282,7 +282,7 @@ class Bot:
             return self.add_hand_claps(tweet)
         # make a list of add-ons as tuples.
         # second element in tuple is where to place it in the tweet
-        if random.random() < 0.6:
+        if random.random() < 0.5:
             # use emojis
             add_ons = [
                 #('ICYMI: ', 'start'), \
@@ -324,7 +324,7 @@ class Bot:
                 ('IMHO ', 'start'), \
                 #(' YMMV', 'end'), \
                 ('FTW - ', 'start'), \
-                ('!', 'end') \
+                ('!', 'end'), \
                 #crying face
                 #(u'\U0001F602', 'end'), \
                 #(u'\U0001F602\U0001F602\U0001F602\U0001F602', 'end'), \
@@ -337,8 +337,8 @@ class Bot:
                 #raising hand
                 #(u'\U0001F64B ', 'start'), \
                 #thinking face
-                #(u'\U0001F914 ', 'start'), \
-                #(u'\U0001F914\U0001F914\U0001F914', 'end')
+                (u'\U0001F914 ', 'start'), \
+                (u'\U0001F914\U0001F914\U0001F914', 'end')
                 ]
         
         while True:
