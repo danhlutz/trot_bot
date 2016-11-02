@@ -283,6 +283,7 @@ class Bot:
         # make a list of add-ons as tuples.
         # second element in tuple is where to place it in the tweet
         if random.random() < 0.6:
+            # use emojis
             add_ons = [
                 #('ICYMI: ', 'start'), \
                 #('TL;DR: ', 'start'), \
@@ -311,6 +312,7 @@ class Bot:
                 (u'\U0001F914\U0001F914\U0001F914', 'end')
                 ]
         else:
+            # use non-emojis
             add_ons = [
                 ('ICYMI: ', 'start'), \
                 ('TL;DR: ', 'start'), \
@@ -322,21 +324,21 @@ class Bot:
                 ('IMHO ', 'start'), \
                 #(' YMMV', 'end'), \
                 ('FTW - ', 'start'), \
-                ('!', 'end'), \
+                ('!', 'end') \
                 #crying face
-                (u'\U0001F602', 'end'), \
-                (u'\U0001F602\U0001F602\U0001F602\U0001F602', 'end'), \
-                (u'\U0001F62D', 'end'), \
-                (u'\U0001F61C', 'end'), \
+                #(u'\U0001F602', 'end'), \
+                #(u'\U0001F602\U0001F602\U0001F602\U0001F602', 'end'), \
+                #(u'\U0001F62D', 'end'), \
+                #(u'\U0001F61C', 'end'), \
                 #angry face
-                (u'\U0001F621', 'end'), \
+                #(u'\U0001F621', 'end'), \
                 # screaming
-                (u'\U0001F631', 'end'), \
+                #(u'\U0001F631', 'end'), \
                 #raising hand
-                (u'\U0001F64B ', 'start'), \
+                #(u'\U0001F64B ', 'start'), \
                 #thinking face
-                (u'\U0001F914 ', 'start'), \
-                (u'\U0001F914\U0001F914\U0001F914', 'end')
+                #(u'\U0001F914 ', 'start'), \
+                #(u'\U0001F914\U0001F914\U0001F914', 'end')
                 ]
         
         while True:
