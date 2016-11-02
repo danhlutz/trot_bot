@@ -301,7 +301,7 @@ class Bot:
                 #('AFAIK ', 'start'), \
                 #crying face
                 (u'\U0001F602', 'end'), \
-                (u'\U0001F602\U0001F602\U0001F602\U0001F602', 'end'), \
+                (u'\U0001F602\U0001F602\U0001F602', 'end'), \
                 (u'\U0001F62D', 'end'), \
                 (u'\U0001F61C', 'end'), \
                 #angry face
