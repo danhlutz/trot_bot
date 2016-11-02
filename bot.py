@@ -261,7 +261,8 @@ class Bot:
             # keep repeating until you get something shorter than 141 chars
             if len(tweet) < 141:
                 # twitterify it 
-                tweet = self.make_it_snotty(tweet)
+                if random.random() < 0.55:
+                    tweet = self.make_it_snotty(tweet)
                 return tweet
 
 
