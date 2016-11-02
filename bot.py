@@ -261,7 +261,7 @@ class Bot:
             # keep repeating until you get something shorter than 141 chars
             if len(tweet) < 141:
                 # twitterify it 
-                if random.random() < 0.55:
+                if random.random() < 0.65:
                     tweet = self.make_it_snotty(tweet)
                 elif random.random() < 0.1:
                     tweet = self.add_hand_claps(tweet)
