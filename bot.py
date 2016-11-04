@@ -938,7 +938,7 @@ def test():
         test_accumulate_wisdom_and_prune,
         test_join_words,
         test_join_words_live,
-        test_draft_tweet,
+        #test_draft_tweet,
         test_new_prune,
         test_even_newer_prune
         ]
