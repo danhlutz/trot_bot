@@ -71,6 +71,7 @@ class Bot:
             '13',
             'part',
             'Trans',
+            'Last'
             ]
             
 
