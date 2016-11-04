@@ -203,8 +203,7 @@ class Bot:
             # in the list of trigrams
             to_test = ('.', start_word[0], start_word[1])
             # check the len of to_test in the trigrams dictionary
-            if len(self.trigrams[to_test]) > 1 and \
-               (len(to_test[1]) > 1 or to_test[1] == 'A' or to_test[1] == 'I') \
+            if (len(to_test[1]) > 1 or to_test[1] == 'A' or to_test[1] == 'I') \
                and start_word[0] not in self.bad_starts:
                 new_start_words.append(start_word)
         if len(new_start_words) > 0:
@@ -829,8 +828,17 @@ def test_draft_tweet(verbose=False):
     trotsky.scrape_page(url)
     trotsky.add_fourgrams()
 
-    return sum([len(trotsky.draft_tweet(verbose=verbose)) < 160 \
-                for _ in range(100)]) == 100
+    tweet_lens = [len(trotsky.draft_tweet(verbose=verbose)) \
+              for _ in range(100)]
+
+    if verbose: print tweet_lens
+    if verbose:
+        for tweet_len in tweet_lens:
+            if tweet_len > 160: print tweet_len
+    sum_tweet_lens = sum([tweet_len < 160 \
+                         for tweet_len in tweet_lens])
+    if verbose: print sum_tweet_lens
+    return  sum_tweet_lens == 100
 
 def test_new_prune(verbose=False):
     x = Bot()
@@ -853,7 +861,7 @@ def test_new_prune(verbose=False):
     return ('I', 'am') in x.start_words and \
            ('You', 'are') in x.start_words and \
            ('A', 'woman') in x.start_words and \
-           ('Stuff', 'stuff') not in x.start_words and \
+           ('Stuff', 'stuff') in x.start_words and \
            ('1', 'thing') not in x.start_words
 
 
